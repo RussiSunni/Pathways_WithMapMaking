@@ -565,7 +565,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
   m_Size: {x: 0, y: 0, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
+  m_TileAnchor: {x: 0, y: 0, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -617,8 +617,9 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: f9bbf997cfa45084f92e1bcb3523af63, type: 2}
   - {fileID: 11400000, guid: 84bd81fdc59c4294dac56c182e701b3a, type: 2}
-  HorizontalToggleTile: {fileID: 11400000, guid: 171638a484ecf104cad0d7f3d416b54c, type: 2}
+  HorizontalToggleTile: {fileID: 11400000, guid: df92685df661ddc4c98b15eb65abff12, type: 2}
   VerticalToggleTile: {fileID: 11400000, guid: 468c7665d0441eb498a7162d39361a21, type: 2}
+  toggle: {fileID: 3245143403987322412, guid: 42a0fb1018a17ad45bb45255f7ce730d, type: 3}
 --- !u!4 &1081999169
 Transform:
   m_ObjectHideFlags: 0

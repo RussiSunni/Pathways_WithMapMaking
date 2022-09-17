@@ -11,6 +11,7 @@ public class LoadManager : MonoBehaviour
     private string _mapName;
     public TileBase HorizontalToggleTile;
     public TileBase VerticalToggleTile;
+    public GameObject toggle;
 
     public void AssignMapName (string mapName)
     {
@@ -27,15 +28,13 @@ public class LoadManager : MonoBehaviour
         for (int i = 0; i < data.tiles.Count; i++)
         {          
             if (data.tiles[i] == "HorizontalToggle")
-            {
-                tilemap.SetTile(data.positions[i], HorizontalToggleTile);
+            {              
+                Instantiate(toggle, data.positions[i], Quaternion.identity);
             }
             else if (data.tiles[i] == "VerticalToggle")
             {
-                tilemap.SetTile(data.positions[i], VerticalToggleTile);
-            }
-            //tilemap.SetTile(data.positions[i], testTile1);
-            //tilemap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
+                Instantiate(toggle, data.positions[i], transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+            }           
         }
     }
 }
