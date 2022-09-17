@@ -10,6 +10,7 @@ public class MapManager : MonoBehaviour
     public static MapManager instance;
     public List<CustomTile> tiles = new List<CustomTile>();
     private string _mapName;
+    public TileBase testTile;
 
     private void Awake()
     {
@@ -63,18 +64,25 @@ public class MapManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(mapData, true);
         File.WriteAllText(Application.dataPath + "/Maps/" + _mapName + ".json", json);        
+        //File.WriteAllText(Application.dataPath + "/testMap.json", json);
     }
 
     void LoadMap()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Maps" + _mapName + ".json");
+        string json = File.ReadAllText(Application.dataPath + "/Maps/" + _mapName + ".json");
+        //string json = File.ReadAllText(Application.dataPath + "/testMap.json");
+        Debug.Log(json);
+
         MapData data = JsonUtility.FromJson<MapData>(json);
 
         tilemap.ClearAllTiles();
 
+        tilemap.SetTile(data.positions[0], testTile);
+
         for (int i = 0; i < data.tiles.Count; i++)
         {
-            tilemap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
+            //tilemap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
+
         }
     }
 

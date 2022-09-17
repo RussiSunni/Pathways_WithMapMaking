@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1324aeef7fb209841aeedbe4fd186119, type: 3}
-  m_Name: HorToggleCustomTile
+  m_Name: SpriteCustomTile
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 171638a484ecf104cad0d7f3d416b54c, type: 2}
-  id: HorizontalToggle
+  tile: {fileID: 11400000, guid: 3b2f1eccffb31704ea6477c77d139eb7, type: 2}
+  id: sprite

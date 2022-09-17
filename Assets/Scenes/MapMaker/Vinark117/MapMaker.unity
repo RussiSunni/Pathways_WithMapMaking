@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTileMap: {fileID: 64365675}
-  currentTile: {fileID: 11400000, guid: 171638a484ecf104cad0d7f3d416b54c, type: 2}
+  currentTile: {fileID: 11400000, guid: 3b2f1eccffb31704ea6477c77d139eb7, type: 2}
   horToggleTile: {fileID: 11400000, guid: 171638a484ecf104cad0d7f3d416b54c, type: 2}
   verToggleTile: {fileID: 11400000, guid: 468c7665d0441eb498a7162d39361a21, type: 2}
   cam: {fileID: 499597541}
@@ -530,6 +530,7 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: f9bbf997cfa45084f92e1bcb3523af63, type: 2}
   - {fileID: 11400000, guid: 84bd81fdc59c4294dac56c182e701b3a, type: 2}
+  testTile: {fileID: 11400000, guid: 171638a484ecf104cad0d7f3d416b54c, type: 2}
   tilemap: {fileID: 64365675}
 --- !u!4 &523586303
 Transform:
@@ -803,9 +804,6 @@ MonoBehaviour:
       m_Calls: []
   m_OnDidEndEdit:
     m_PersistentCalls:
-      m_Calls: []
-  m_OnValueChanged:
-    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 523586302}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
@@ -819,6 +817,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
