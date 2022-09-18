@@ -26,14 +26,16 @@ public class LoadManager : MonoBehaviour
         tilemap.ClearAllTiles();
 
         for (int i = 0; i < data.tiles.Count; i++)
-        {          
+        {
+            Vector3 positionAdjustedForGrid = new Vector3(data.positions[i].x + 0.5f, data.positions[i].y + 0.5f, 0);
+
             if (data.tiles[i] == "HorizontalToggle")
             {              
-                Instantiate(toggle, data.positions[i], Quaternion.identity);
+                Instantiate(toggle, positionAdjustedForGrid, Quaternion.identity);
             }
             else if (data.tiles[i] == "VerticalToggle")
             {
-                Instantiate(toggle, data.positions[i], transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                Instantiate(toggle, positionAdjustedForGrid, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
             }           
         }
     }
