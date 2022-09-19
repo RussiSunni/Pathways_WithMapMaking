@@ -18,6 +18,15 @@ public class MapEditor : MonoBehaviour
     TileBase verToggleTile;
 
     [SerializeField]
+    TileBase startPointTile;
+
+    [SerializeField]
+    TileBase endPointTile;
+
+    [SerializeField]
+    TileBase blockerTile;
+
+    [SerializeField]
     Camera cam;
 
     private void Update()
@@ -54,5 +63,18 @@ public class MapEditor : MonoBehaviour
         currentTile = verToggleTile;
     }
 
+    public void ChooseStartPointTile()
+    {
+        currentTile = startPointTile;
+    }
 
+    public void ChooseEndPointTile()
+    {
+        currentTile = endPointTile;
+    }
+
+    public void ChooseBlockerTile()
+    {
+        currentTile = blockerTile;
+    }
 }

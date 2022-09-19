@@ -10,7 +10,7 @@ public class MapManager : MonoBehaviour
     public static MapManager instance;
     public List<CustomTile> tiles = new List<CustomTile>();
     private string _mapName;
-    public TileBase testTile;
+   // public TileBase testTile;
 
     private void Awake()
     {
@@ -77,7 +77,7 @@ public class MapManager : MonoBehaviour
 
         tilemap.ClearAllTiles();
 
-        tilemap.SetTile(data.positions[0], testTile);
+      //  tilemap.SetTile(data.positions[0], testTile);
 
         for (int i = 0; i < data.tiles.Count; i++)
         {
