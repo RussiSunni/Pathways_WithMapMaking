@@ -7,11 +7,20 @@ using System.IO;
 public class LoadManager : MonoBehaviour
 {
     public Tilemap tilemap;
-    public List<CustomTile> tiles = new List<CustomTile>();
+  //  public List<CustomTile> tiles = new List<CustomTile>();
     private string _mapName;
-    public TileBase HorizontalToggleTile;
-    public TileBase VerticalToggleTile;
-    public GameObject toggle;
+   // public TileBase HorizontalToggleTile;
+  //  public TileBase VerticalToggleTile;
+
+    [SerializeField]
+    private GameObject _toggle;
+    [SerializeField]
+    private GameObject _startPoint;
+    [SerializeField]
+    private GameObject _endPoint;
+    [SerializeField]
+    private GameObject _blocker;
+
 
     public void AssignMapName (string mapName)
     {
@@ -31,12 +40,24 @@ public class LoadManager : MonoBehaviour
 
             if (data.tiles[i] == "HorizontalToggle")
             {              
-                Instantiate(toggle, positionAdjustedForGrid, Quaternion.identity);
+                Instantiate(_toggle, positionAdjustedForGrid, Quaternion.identity);
             }
             else if (data.tiles[i] == "VerticalToggle")
             {
-                Instantiate(toggle, positionAdjustedForGrid, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
-            }           
+                Instantiate(_toggle, positionAdjustedForGrid, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+            }
+            else if (data.tiles[i] == "StartPoint")
+            {
+                Instantiate(_startPoint, positionAdjustedForGrid, Quaternion.identity);
+            }
+            else if (data.tiles[i] == "EndPoint")
+            {
+                Instantiate(_endPoint, positionAdjustedForGrid, Quaternion.identity);
+            }
+            else if (data.tiles[i] == "Blocker")
+            {
+                Instantiate(_blocker, positionAdjustedForGrid, Quaternion.identity);
+            }
         }
     }
 }

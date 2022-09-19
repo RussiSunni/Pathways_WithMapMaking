@@ -615,6 +615,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 84bd81fdc59c4294dac56c182e701b3a, type: 2}
   - {fileID: 11400000, guid: 71f2fb9dc304ebd439b414f011bf0c89, type: 2}
   - {fileID: 11400000, guid: 8e356aa57b227724298eda9d9fa35cff, type: 2}
+  - {fileID: 11400000, guid: bbb95b0b5c58bd844bf247b3d3462faf, type: 2}
   tilemap: {fileID: 64365675}
 --- !u!4 &523586303
 Transform:

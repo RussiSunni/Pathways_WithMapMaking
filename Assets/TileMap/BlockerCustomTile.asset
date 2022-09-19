@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: SpriteRuleTile
+  m_Script: {fileID: 11500000, guid: 1324aeef7fb209841aeedbe4fd186119, type: 3}
+  m_Name: BlockerCustomTile
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -848795388, guid: 7f8232b90be93c9409ea3d2ce6ac4190, type: 3}
-  m_DefaultGameObject: {fileID: 0}
-  m_DefaultColliderType: 1
-  m_TilingRules: []
+  tile: {fileID: 11400000, guid: 7bc7a74ff6cb78b439cfa27a387d2e8f, type: 2}
+  id: Blocker

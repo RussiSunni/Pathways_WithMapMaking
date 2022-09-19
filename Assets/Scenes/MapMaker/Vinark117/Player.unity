@@ -614,12 +614,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1077442203}
-  tiles:
-  - {fileID: 11400000, guid: f9bbf997cfa45084f92e1bcb3523af63, type: 2}
-  - {fileID: 11400000, guid: 84bd81fdc59c4294dac56c182e701b3a, type: 2}
-  HorizontalToggleTile: {fileID: 11400000, guid: df92685df661ddc4c98b15eb65abff12, type: 2}
-  VerticalToggleTile: {fileID: 11400000, guid: 468c7665d0441eb498a7162d39361a21, type: 2}
-  toggle: {fileID: 3245143403987322412, guid: 42a0fb1018a17ad45bb45255f7ce730d, type: 3}
+  _toggle: {fileID: 3245143403987322412, guid: 42a0fb1018a17ad45bb45255f7ce730d, type: 3}
+  _startPoint: {fileID: 880648080937267970, guid: 8d582209f41873041a5fbc84586deb4e, type: 3}
+  _endPoint: {fileID: 5933129078573432494, guid: 76db11860fd7ed0479c95c1c4a7b5fb0, type: 3}
+  _blocker: {fileID: 2302332841932527474, guid: f6bcc396270dc3c49a441241c7d40e45, type: 3}
 --- !u!4 &1081999169
 Transform:
   m_ObjectHideFlags: 0
