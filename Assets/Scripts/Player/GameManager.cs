@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviourPun
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Instantiate Endpoints 
-        PhotonNetwork.InstantiateRoomObject("EndPoint", new Vector3(7.25f, 4, 0), Quaternion.identity, 0);
-        PhotonNetwork.InstantiateRoomObject("EndPoint", new Vector3(7.25f, -4, 0), Quaternion.identity, 0);
+     //   PhotonNetwork.InstantiateRoomObject("EndPoint", new Vector3(7.25f, 4, 0), Quaternion.identity, 0);
+    //    PhotonNetwork.InstantiateRoomObject("EndPoint", new Vector3(7.25f, -4, 0), Quaternion.identity, 0);
 
         _infoPanelCanvasGroup.alpha = 1;
         _isGameStarted = true;
