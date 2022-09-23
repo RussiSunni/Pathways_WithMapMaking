@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class MapEditor : MonoBehaviour
@@ -33,11 +34,11 @@ public class MapEditor : MonoBehaviour
     {
         Vector3Int pos = currentTileMap.WorldToCell(cam.ScreenToWorldPoint(Input.mousePosition));
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             PlaceTile(pos);
         }
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             DeleteTile(pos);
         }

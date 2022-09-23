@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System.Web;
 using System;
 using Photon.Pun.UtilityScripts;
+using System.IO;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     [SerializeField]
@@ -35,12 +36,20 @@ public class Launcher : MonoBehaviourPunCallbacks
     float secondsPerRound = 15;
     int pointsPerToggle = 1;
     int pointsPerEndPoint = 50;
+    string mapJSON;
 
     // Make the room options a global variable.
-    public static RoomOptions roomOptions = new RoomOptions();   
+    public static RoomOptions roomOptions = new RoomOptions();
+
+
+    [SerializeField]
+    private Text _mapDataTestText;
 
     void Start()
     {
+        _mapDataTestText.text = "ttttttttttttttttttttttttttttttttttt";
+
+
         PlayerPrefs.DeleteAll();
         Debug.Log("Connecting to Photon Network");
 
@@ -60,6 +69,10 @@ public class Launcher : MonoBehaviourPunCallbacks
             string secondsString = HttpUtility.ParseQueryString(uri.Query).Get("seconds");
             string pointsPerToggleString = HttpUtility.ParseQueryString(uri.Query).Get("toggle_points");
             string pointsPerEndPointString = HttpUtility.ParseQueryString(uri.Query).Get("endpoint_points");
+            mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
+
+            _mapDataTestText.text = mapJSON;
+
             totalNumberOfRounds = int.Parse(roundsString);
             movesPerRound = int.Parse(movesString);
             secondsPerRound = float.Parse(secondsString);
@@ -102,13 +115,17 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             playerName = "tom";
             PhotonNetwork.LocalPlayer.JoinTeam(4);
-            
+
+            mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test3" + ".json");
+
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";           
            
-            PhotonNetwork.LocalPlayer.JoinTeam(1);            
+            PhotonNetwork.LocalPlayer.JoinTeam(1);    
+            
+            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
         }
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
@@ -120,7 +137,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         roomOptions.CustomRoomProperties.Add("SecondsPerRound", secondsPerRound);
         roomOptions.CustomRoomProperties.Add("TotalNumberOfRounds", totalNumberOfRounds);
         roomOptions.CustomRoomProperties.Add("PointsPerToggle", pointsPerToggle);
-        roomOptions.CustomRoomProperties.Add("PointsPerEndpoint", pointsPerEndPoint);
+        roomOptions.CustomRoomProperties.Add("PointsPerEndpoint", pointsPerEndPoint);  
+        roomOptions.CustomRoomProperties.Add("MapJSON", mapJSON);      
     }
 
     void Awake()
@@ -153,7 +171,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void LoadArena()
     {
-        PhotonNetwork.LoadLevel("TilemapTest");
+        PhotonNetwork.LoadLevel("Main");
     }
 
     // Photon Methods
