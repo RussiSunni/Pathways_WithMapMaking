@@ -44,8 +44,6 @@ public class MapLoadManager : MonoBehaviour
         string json = (string)Launcher.roomOptions.CustomRoomProperties["MapJSON"];
 
         MapData data = JsonUtility.FromJson<MapData>(json);
-     
-       // tilemap.ClearAllTiles();
 
         for (int i = 0; i < data.tiles.Count; i++)
         {
@@ -53,22 +51,18 @@ public class MapLoadManager : MonoBehaviour
 
             if (data.tiles[i] == "HorizontalToggle")
             {              
-                //Instantiate(_toggle, positionAdjustedForGrid, Quaternion.identity);
                 PhotonNetwork.InstantiateRoomObject("Toggle", positionAdjustedForGrid, Quaternion.identity, 0);
             }
             else if (data.tiles[i] == "VerticalToggle")
             {
                 PhotonNetwork.InstantiateRoomObject("Toggle", positionAdjustedForGrid, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
-                //Instantiate(_toggle, positionAdjustedForGrid, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
             }
             else if (data.tiles[i] == "StartPoint")
             {
-               // Instantiate(_startPoint, positionAdjustedForGrid, Quaternion.identity);
                 PhotonNetwork.InstantiateRoomObject("StartPoint", positionAdjustedForGrid, Quaternion.identity, 0);
             }
             else if (data.tiles[i] == "EndPoint")
             {
-               // Instantiate(_endPoint, positionAdjustedForGrid, Quaternion.identity);
                 PhotonNetwork.InstantiateRoomObject("EndPoint", positionAdjustedForGrid, Quaternion.identity, 0);
             }
             else if (data.tiles[i] == "Blocker")

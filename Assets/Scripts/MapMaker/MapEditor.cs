@@ -6,9 +6,11 @@ using UnityEngine.Tilemaps;
 
 public class MapEditor : MonoBehaviour
 {
-    [SerializeField]
     Tilemap currentTileMap;
 
+    [SerializeField]
+    Tilemap squareTileMap;
+        
     [SerializeField]
     TileBase currentTile;
 
@@ -30,13 +32,18 @@ public class MapEditor : MonoBehaviour
     [SerializeField]
     Camera cam;
 
+    private void Start()
+    {
+        currentTileMap = squareTileMap;
+    }
+
     private void Update()
     {
         Vector3Int pos = currentTileMap.WorldToCell(cam.ScreenToWorldPoint(Input.mousePosition));
 
         if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            PlaceTile(pos);
+            PlaceTile(pos);      
         }
         if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -45,13 +52,13 @@ public class MapEditor : MonoBehaviour
     }
 
     void PlaceTile(Vector3Int pos)
-    {
+    {       
         currentTileMap.SetTile(pos, currentTile);
     }
 
     void DeleteTile(Vector3Int pos)
     {
-        currentTileMap.SetTile(pos, null);
+        currentTileMap.SetTile(pos, null);       
     }
 
     public void ChooseHorizontalTile()

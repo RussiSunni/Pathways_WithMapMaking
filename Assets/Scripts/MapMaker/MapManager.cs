@@ -13,8 +13,8 @@ public class MapManager : MonoBehaviour
     public static MapManager instance;
     public List<CustomTile> tiles = new List<CustomTile>();
     private string _mapName;
-   // public TileBase testTile;
 
+    public Tilemap squareTileMap;
     private void Awake()
     {
         if (instance == null)
@@ -25,49 +25,43 @@ public class MapManager : MonoBehaviour
         {
             Destroy(this);
         }
-    }
-
-    public Tilemap tilemap;
+    }  
 
     private void Update()
-    {
-        //if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
+    {      
+        //if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.L))
         //{
-        //    SaveMap();
+        //    LoadMap();
         //}
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.L))
-        {
-            LoadMap();
-        }
     }
 
     public void SaveMap()
     {
         Debug.Log("map saved");
         
-        BoundsInt bounds = tilemap.cellBounds;
+        // Get bounds of both tilemaps
+        BoundsInt bounds = squareTileMap.cellBounds;        
 
-        MapData mapData = new MapData();
+        // Get data for the tilemap.
+        MapData squareTileMapData = new MapData();
 
-        mapData.name = _mapName;
+        squareTileMapData.name = _mapName;
         for (int x = bounds.min.x; x < bounds.max.x; x++)
         {
             for (int y = bounds.min.y; y < bounds.max.y; y++)
             {
-                TileBase temp =  tilemap.GetTile(new Vector3Int(x, y, 0));
+                TileBase temp = squareTileMap.GetTile(new Vector3Int(x, y, 0));
                 CustomTile tempTile = tiles.Find(t => t.tile == temp);
 
                 if (tempTile != null)
                 {
-                    mapData.tiles.Add(tempTile.id);
-                    mapData.positions.Add(new Vector3Int(x, y, 0));
+                    squareTileMapData.tiles.Add(tempTile.id);
+                    squareTileMapData.positions.Add(new Vector3Int(x, y, 0));
                 }
             }
-        }
+        }       
 
-        string json = JsonUtility.ToJson(mapData, false);
-
-        Debug.Log(json);
+        string json = JsonUtility.ToJson(squareTileMapData, false);
                 
         if (Application.platform == RuntimePlatform.WindowsEditor)
         {
@@ -79,24 +73,23 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    void LoadMap()
-    {
-        string json = File.ReadAllText(Application.dataPath + "/Maps/" + _mapName + ".json");
-        //string json = File.ReadAllText(Application.dataPath + "/testMap.json");
-        Debug.Log(json);
+    //void LoadMap()
+    //{
+    //    string json = File.ReadAllText(Application.dataPath + "/Maps/" + _mapName + ".json");
+    //    //string json = File.ReadAllText(Application.dataPath + "/testMap.json");
+    //    Debug.Log(json);
 
-        MapData data = JsonUtility.FromJson<MapData>(json);
+    //    MapData data = JsonUtility.FromJson<MapData>(json);
 
-        tilemap.ClearAllTiles();
+    //    squareTileMap.ClearAllTiles();
 
-      //  tilemap.SetTile(data.positions[0], testTile);
+    //  //  tilemap.SetTile(data.positions[0], testTile);
 
-        for (int i = 0; i < data.tiles.Count; i++)
-        {
-            //tilemap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
-
-        }
-    }
+    //    for (int i = 0; i < data.tiles.Count; i++)
+    //    {
+    //        //tilemap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
+    //    }
+    //}
 
     public void AssignMapName(string mapName)
     {

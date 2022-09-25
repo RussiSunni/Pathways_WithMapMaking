@@ -41,15 +41,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     // Make the room options a global variable.
     public static RoomOptions roomOptions = new RoomOptions();
 
-
-    [SerializeField]
-    private Text _mapDataTestText;
-
     void Start()
-    {
-        _mapDataTestText.text = "ttttttttttttttttttttttttttttttttttt";
-
-
+    { 
         PlayerPrefs.DeleteAll();
         Debug.Log("Connecting to Photon Network");
 
@@ -70,8 +63,6 @@ public class Launcher : MonoBehaviourPunCallbacks
             string pointsPerToggleString = HttpUtility.ParseQueryString(uri.Query).Get("toggle_points");
             string pointsPerEndPointString = HttpUtility.ParseQueryString(uri.Query).Get("endpoint_points");
             mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
-
-            _mapDataTestText.text = mapJSON;
 
             totalNumberOfRounds = int.Parse(roundsString);
             movesPerRound = int.Parse(movesString);
@@ -125,7 +116,7 @@ public class Launcher : MonoBehaviourPunCallbacks
            
             PhotonNetwork.LocalPlayer.JoinTeam(1);    
             
-            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
+            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test10" + ".json");
         }
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
