@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
 using System.Runtime.InteropServices;
+using System;
+using System.Web;
 
 public class MapManager : MonoBehaviour
 {  
@@ -13,6 +15,7 @@ public class MapManager : MonoBehaviour
     public static MapManager instance;
     public List<CustomTile> tiles = new List<CustomTile>();
     private string _mapName;
+    private string _mapJSON = "";
 
     public Tilemap squareTileMap;
     private void Awake()
@@ -25,14 +28,21 @@ public class MapManager : MonoBehaviour
         {
             Destroy(this);
         }
-    }  
+    }
 
-    private void Update()
-    {      
-        //if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.L))
-        //{
-        //    LoadMap();
-        //}
+    void Start()
+    {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            string urlString = Application.absoluteURL;
+            Uri uri = new Uri(urlString);
+            _mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
+
+            if (_mapJSON != "")
+            {
+                LoadMap(_mapJSON);
+            }
+        }
     }
 
     public void SaveMap()
@@ -73,23 +83,55 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //void LoadMap()
-    //{
-    //    string json = File.ReadAllText(Application.dataPath + "/Maps/" + _mapName + ".json");
-    //    //string json = File.ReadAllText(Application.dataPath + "/testMap.json");
-    //    Debug.Log(json);
+    public void LoadMap(string mapJSON)
+    {
+        string json = "";
 
-    //    MapData data = JsonUtility.FromJson<MapData>(json);
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            json = mapJSON;
+        }
+        // For testing only.
+        else if (Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            json = File.ReadAllText(Application.dataPath + "/maps/" + "test10" + ".json");
+        }          
+      
+        MapData data = JsonUtility.FromJson<MapData>(json);
 
-    //    squareTileMap.ClearAllTiles();
+        squareTileMap.ClearAllTiles();
 
-    //  //  tilemap.SetTile(data.positions[0], testTile);
+        for (int i = 0; i < data.tiles.Count; i++)
+        {
+            //squareTileMap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
+            //
+            Debug.Log(data.tiles[i]);
+            int tileListNum = 0;
 
-    //    for (int i = 0; i < data.tiles.Count; i++)
-    //    {
-    //        //tilemap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
-    //    }
-    //}
+            if (data.tiles[i] == "HorizontalToggle")
+            {
+                tileListNum = 0;
+            }
+            else if (data.tiles[i] == "VerticalToggle")
+            {
+                tileListNum = 1;
+            }
+            else if (data.tiles[i] == "StartPoint")
+            {
+                tileListNum = 2;
+            }
+            else if (data.tiles[i] == "EndPoint")
+            {
+                tileListNum = 3;
+            }
+            else if (data.tiles[i] == "Blocker")
+            {
+                tileListNum = 4;
+            }
+
+            squareTileMap.SetTile(data.positions[i], tiles[tileListNum].tile);
+        }
+    }
 
     public void AssignMapName(string mapName)
     {
