@@ -703,6 +703,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e356aa57b227724298eda9d9fa35cff, type: 2}
   - {fileID: 11400000, guid: bbb95b0b5c58bd844bf247b3d3462faf, type: 2}
   squareTileMap: {fileID: 64365675}
+  _mapNameInput: {fileID: 1081089997}
 --- !u!4 &523586303
 Transform:
   m_ObjectHideFlags: 0
@@ -2393,7 +2394,7 @@ MonoBehaviour:
       - m_Target: {fileID: 523586302}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
         m_MethodName: LoadMap
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

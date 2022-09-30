@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System;
 using System.Web;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {  
@@ -13,7 +14,7 @@ public class MapManager : MonoBehaviour
     private static extern void AddMap(string mapJSON);
 
     [DllImport("__Internal")]
-    private static extern void UpdateMap(string mapId, string mapJSON);
+    private static extern void UpdateMap(string mapId, string mapJSON);  
 
     public static MapManager instance;
     public List<CustomTile> tiles = new List<CustomTile>();
@@ -23,6 +24,10 @@ public class MapManager : MonoBehaviour
     public Tilemap squareTileMap;
     private string _mapId;
     private bool _isEditingMap = false;
+
+    [SerializeField]
+    private InputField _mapNameInput;
+
     private void Awake()
     {
         if (instance == null)
@@ -34,7 +39,6 @@ public class MapManager : MonoBehaviour
             Destroy(this);
         }
     }
-
     void Start()
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
@@ -142,6 +146,9 @@ public class MapManager : MonoBehaviour
             }
 
             squareTileMap.SetTile(data.positions[i], tiles[tileListNum].tile);
+
+            _mapName = data.name;
+            _mapNameInput.text = _mapName;
         }
     }
 
