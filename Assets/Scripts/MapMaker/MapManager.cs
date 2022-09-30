@@ -10,7 +10,10 @@ using System.Web;
 public class MapManager : MonoBehaviour
 {  
     [DllImport("__Internal")]
-    private static extern void ExportMapJSON(string mapJSON);
+    private static extern void AddMap(string mapJSON);
+
+    [DllImport("__Internal")]
+    private static extern void UpdateMap(string mapId, string mapJSON);
 
     public static MapManager instance;
     public List<CustomTile> tiles = new List<CustomTile>();
@@ -18,6 +21,8 @@ public class MapManager : MonoBehaviour
     private string _mapJSON = "";
 
     public Tilemap squareTileMap;
+    private string _mapId;
+    private bool _isEditingMap = false;
     private void Awake()
     {
         if (instance == null)
@@ -36,6 +41,7 @@ public class MapManager : MonoBehaviour
         {
             string urlString = Application.absoluteURL;
             Uri uri = new Uri(urlString);
+            _mapId = HttpUtility.ParseQueryString(uri.Query).Get("id");
             _mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
 
             if (_mapJSON != "")
@@ -79,13 +85,21 @@ public class MapManager : MonoBehaviour
         }
         else if (Application.platform == RuntimePlatform.WebGLPlayer)
         {        
-            ExportMapJSON(json);           
+            if (!_isEditingMap)
+            {
+                AddMap(json);
+            }
+            else
+            {
+                UpdateMap(_mapId, json);
+            }            
         }
     }
 
     public void LoadMap(string mapJSON)
     {
         string json = "";
+        _isEditingMap = true;
 
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
@@ -103,8 +117,6 @@ public class MapManager : MonoBehaviour
 
         for (int i = 0; i < data.tiles.Count; i++)
         {
-            //squareTileMap.SetTile(data.positions[i], tiles.Find(t => t.name == data.tiles[i]).tile);
-            //
             Debug.Log(data.tiles[i]);
             int tileListNum = 0;
 
