@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class MapManager : MonoBehaviour
 {  
     [DllImport("__Internal")]
-    private static extern void AddMap(string mapJSON);
+    private static extern void AddMap(string cohortId, string mapJSON);
 
     [DllImport("__Internal")]
     private static extern void UpdateMap(string mapId, string mapJSON);  
@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour
     private string _mapJSON = "";
 
     public Tilemap squareTileMap;
+    private string _cohortId;
     private string _mapId;
     private bool _isEditingMap = false;
 
@@ -44,10 +45,12 @@ public class MapManager : MonoBehaviour
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
             string urlString = Application.absoluteURL;
+            Uri uri = new Uri(urlString);
 
-            if (urlString.ToLower().Contains('?')) 
-            {
-                Uri uri = new Uri(urlString);           
+            _cohortId = HttpUtility.ParseQueryString(uri.Query).Get("cohort");
+
+            if (urlString.ToLower().Contains('&')) 
+            {                        
                 _mapId = HttpUtility.ParseQueryString(uri.Query).Get("id");
                 _mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");      
                 LoadMap(_mapJSON);
@@ -91,7 +94,7 @@ public class MapManager : MonoBehaviour
         {        
             if (!_isEditingMap)
             {
-                AddMap(json);
+                AddMap(_cohortId, json);
             }
             else
             {

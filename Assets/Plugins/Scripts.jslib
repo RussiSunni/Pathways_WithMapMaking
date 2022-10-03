@@ -1,19 +1,12 @@
 mergeInto(LibraryManager.library, {
 
-  SaveTest: function () {
-    window.alert("Save test");
-  }, 
-
-  ExportMapJSONTest: function (mapJSON) {
-    console.log(UTF8ToString(mapJSON));
-     window.alert(UTF8ToString(mapJSON));
-     window.alert(UTF8ToString(mapJSON).length);
-  }, 
-
-  AddMap: function (mapJSON) {
+  AddMap: function (cohortId, mapJSON) {
     var protocol = window.location.protocol;
     var host = window.location.hostname;
-    var url = protocol + "//" + host + ":3000/maps/add";
+
+    var formattedCohortId = UTF8ToString(cohortId);
+
+    var url = protocol + "//" + host + ":3000/maps/add/" + formattedCohortId;
 
     console.log(mapJSON);    
 
