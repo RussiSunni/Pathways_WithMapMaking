@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 880648080937267968}
   - component: {fileID: 880648080937267969}
   - component: {fileID: 880648080937267975}
-  - component: {fileID: 880648080937267974}
   - component: {fileID: 2958267815106057910}
   - component: {fileID: 4356454257661821175}
   m_Layer: 0
   m_Name: StartPoint
-  m_TagString: Untagged
+  m_TagString: StartPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -104,27 +103,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &880648080937267974
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880648080937267970}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 1
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!114 &2958267815106057910
 MonoBehaviour:
   m_ObjectHideFlags: 0
