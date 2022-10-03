@@ -45,19 +45,9 @@ public class GameManager : MonoBehaviourPun
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Instantiate Endpoints 
-     //   PhotonNetwork.InstantiateRoomObject("EndPoint", new Vector3(7.25f, 4, 0), Quaternion.identity, 0);
-    //    PhotonNetwork.InstantiateRoomObject("EndPoint", new Vector3(7.25f, -4, 0), Quaternion.identity, 0);
-
         _infoPanelCanvasGroup.alpha = 1;
         _isGameStarted = true;
         TotalScoreText.text = _totalScore.ToString();
-
-        // Reset the parameters for the next round.
-        //RoundScore = 0;
-        //RoundScoreText.text = RoundScore.ToString();
-        //MovesInRoundRemaining = (int)Launcher.roomOptions.CustomRoomProperties["MovesPerRound"];
-        //SecondsInRoundRemaining = (float)Launcher.roomOptions.CustomRoomProperties["SecondsPerRound"];
     }
 
     void Start()
@@ -109,7 +99,6 @@ public class GameManager : MonoBehaviourPun
 
     public void Update()
     {   
-
         if (_isGameStarted && !_isGameEnded)
         {
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
@@ -132,7 +121,7 @@ public class GameManager : MonoBehaviourPun
                                 numberOfEndPoints++;
                             }
                         }
-                        RoundScore = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }
                 else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
@@ -153,7 +142,7 @@ public class GameManager : MonoBehaviourPun
                                 numberOfEndPoints++;
                             }
                         }
-                        RoundScore = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }
                 else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
@@ -174,7 +163,7 @@ public class GameManager : MonoBehaviourPun
                                 numberOfEndPoints++;
                             }
                         }
-                        RoundScore = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }
                 else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
@@ -195,7 +184,7 @@ public class GameManager : MonoBehaviourPun
                                 numberOfEndPoints++;
                             }
                         }
-                        RoundScore = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }
                 else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
@@ -216,7 +205,7 @@ public class GameManager : MonoBehaviourPun
                                 numberOfEndPoints++;
                             }
                         }
-                        RoundScore = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }
                 else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
@@ -237,7 +226,7 @@ public class GameManager : MonoBehaviourPun
                                 numberOfEndPoints++;
                             }
                         }
-                        RoundScore = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }
             }
@@ -303,9 +292,7 @@ public class GameManager : MonoBehaviourPun
             _roundNumberText.text = _roundNumber.ToString();
 
             _totalScore = _totalScore + RoundScore;
-
-            // Reset the map.
-            //  SceneManager.LoadScene("Main");
+            TotalScoreText.text = _totalScore.ToString();
 
             // Reset the parameters for the next round.
             RoundScore = 0;
