@@ -44,12 +44,12 @@ public class MapManager : MonoBehaviour
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
             string urlString = Application.absoluteURL;
-            Uri uri = new Uri(urlString);
-            _mapId = HttpUtility.ParseQueryString(uri.Query).Get("id");
-            _mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
 
-            if (_mapJSON != "")
+            if (urlString.ToLower().Contains('?')) 
             {
+                Uri uri = new Uri(urlString);           
+                _mapId = HttpUtility.ParseQueryString(uri.Query).Get("id");
+                _mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");      
                 LoadMap(_mapJSON);
             }
         }
