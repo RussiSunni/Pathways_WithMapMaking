@@ -30,6 +30,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
     void Start()
     {
+       
         // Fill list of team colours.
         //_teamColours.Add(_yellowTeamConnectedColor);
         //_teamColours.Add(_blueTeamConnectedColor);
@@ -60,6 +61,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         toggles = GameObject.FindGameObjectsWithTag("Toggle");         
        
         thisCollider = GetComponent<Collider2D>();
+        Debug.Log(thisCollider.bounciness);
     }
 
     void Update()
@@ -444,23 +446,99 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     // Rotate toggle on mouse click.
                     if (Input.GetMouseButtonDown(0))
                     {
-                        int numChildren = transform.childCount;                      
+                        bool isSteal = false;
 
-                        for (int i = 0; i < numChildren; i++)
+                        if (_sprite.color != _disconnectedColor)
                         {
-                            if (numChildren > i)
-                            {                         
-                                transform.GetChild(i).parent = _originalParent;
+                            if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
+                            {
+                                if (_sprite.color != _yellowTeamConnectedColor)
+                                {
+                                    isSteal = true;
+                                    if (GameManager.NumberOfStealsRemaining > 0)
+                                    {
+                                        GameManager.NumberOfStealsRemaining--;
+                                    }
+                                }
+                            }
+                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
+                            {
+                                if (_sprite.color != _blueTeamConnectedColor)
+                                {
+                                    isSteal = true;
+                                    if (GameManager.NumberOfStealsRemaining > 0)
+                                    {
+                                        GameManager.NumberOfStealsRemaining--;
+                                    }
+                                }
+                            }
+                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
+                            {
+                                if (_sprite.color != _redTeamConnectedColor)
+                                {
+                                    isSteal = true;
+                                    if (GameManager.NumberOfStealsRemaining > 0)
+                                    {
+                                        GameManager.NumberOfStealsRemaining--;                                        
+                                    }
+                                }
+                            }
+                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
+                            {
+                                if (_sprite.color != _purpleTeamConnectedColor)
+                                {
+                                    isSteal = true;
+                                    if (GameManager.NumberOfStealsRemaining > 0)
+                                    {
+                                        GameManager.NumberOfStealsRemaining--;                                        
+                                    }
+                                }
+                            }
+                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
+                            {
+                                if (_sprite.color != _orangeTeamConnectedColor)
+                                {
+                                    isSteal = true;
+                                    if (GameManager.NumberOfStealsRemaining > 0)
+                                    {
+                                        GameManager.NumberOfStealsRemaining--;                                        
+                                    }
+                                }
+                            }
+                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
+                            {
+                                if (_sprite.color != _greenTeamConnectedColor)
+                                {
+                                    isSteal = true;
+                                    if (GameManager.NumberOfStealsRemaining > 0)
+                                    {
+                                        GameManager.NumberOfStealsRemaining--;                                        
+                                    }
+                                }
                             }
                         }
 
-                        //transform.parent = _originalParent;
-                        //_sprite.color = _disconnectedColor;
+                        if (!isSteal || GameManager.NumberOfStealsRemaining > 0)
+                        {
+                            int numChildren = transform.childCount;
 
-                        transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);
-                       
-                        // Reduce turns in round remaining for all team members.                       
-                        photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
+                            for (int i = 0; i < numChildren; i++)
+                            {
+                                if (numChildren > i)
+                                {
+                                    transform.GetChild(i).parent = _originalParent;
+                                }
+                            }
+
+                            //transform.parent = _originalParent;
+                            //_sprite.color = _disconnectedColor;
+
+                            transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);
+
+                            // Reduce turns in round remaining for all team members.                       
+                            photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
+                       }
+                        
                     }
                 }
             }

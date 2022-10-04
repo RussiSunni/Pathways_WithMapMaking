@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviourPun
     public Text _roundNumberText;
     public Text _movesRemainingText;
     public Text _timeRemainingText;
+    public Text NumberOfStealsRemainingText;
 
     [SerializeField]
     private CanvasGroup _infoPanelCanvasGroup;  
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviourPun
     public static float SecondsInRoundRemaining;
     public static int PointsPerToggle;
     public static int PointsPerEndpoint;
+    public static int NumberOfStealsRemaining;
     private bool _isGameStarted = false;
     private bool _isGameEnded;
 
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviourPun
         TotalNumberOfRounds = (int)Launcher.roomOptions.CustomRoomProperties["TotalNumberOfRounds"];
         PointsPerToggle = (int)Launcher.roomOptions.CustomRoomProperties["PointsPerToggle"];
         PointsPerEndpoint = (int)Launcher.roomOptions.CustomRoomProperties["PointsPerEndpoint"];
+        NumberOfStealsRemaining = (int)Launcher.roomOptions.CustomRoomProperties["TotalNumberOfSteals"];
 
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
         {
@@ -94,7 +97,8 @@ public class GameManager : MonoBehaviourPun
 
         _roundNumberText.text = _roundNumber.ToString();
         _movesRemainingText.text = MovesInRoundRemaining.ToString();
-        _timeRemainingText.text = SecondsInRoundRemaining.ToString();      
+        _timeRemainingText.text = SecondsInRoundRemaining.ToString();
+        NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
     }
 
     public void Update()
@@ -231,6 +235,7 @@ public class GameManager : MonoBehaviourPun
                 }
             }
 
+            NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
             RoundScoreText.text = RoundScore.ToString();
 
             // Moves remaining

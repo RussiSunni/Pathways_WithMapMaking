@@ -28,14 +28,18 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private CanvasGroup readyButtonCanvasGroup;
 
+    [SerializeField]
+    private CanvasGroup startButtonCanvasGroup;
+
     string playerName = "";
     string roomName = "";
 
     int totalNumberOfRounds = 2;
-    int movesPerRound = 11;
-    float secondsPerRound = 15;
+    int movesPerRound = 10;
+    float secondsPerRound = 20;
     int pointsPerToggle = 1;
     int pointsPerEndPoint = 50;
+    int totalNumberOfSteals = 6;
     string mapJSON;
 
     // Make the room options a global variable.
@@ -62,6 +66,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             string secondsString = HttpUtility.ParseQueryString(uri.Query).Get("seconds");
             string pointsPerToggleString = HttpUtility.ParseQueryString(uri.Query).Get("toggle_points");
             string pointsPerEndPointString = HttpUtility.ParseQueryString(uri.Query).Get("endpoint_points");
+            string totalNumberOfStealsString = HttpUtility.ParseQueryString(uri.Query).Get("steals");
             mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
 
             totalNumberOfRounds = int.Parse(roundsString);
@@ -69,6 +74,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             secondsPerRound = float.Parse(secondsString);
             pointsPerToggle = int.Parse(pointsPerToggleString);
             pointsPerEndPoint = int.Parse(pointsPerEndPointString);
+            totalNumberOfSteals = int.Parse(totalNumberOfStealsString);
 
             if (team == "Yellow")
             {
@@ -97,6 +103,11 @@ public class Launcher : MonoBehaviourPunCallbacks
             else if (team == "Teacher")
             {
                 PhotonNetwork.LocalPlayer.JoinTeam(0);
+                startButtonCanvasGroup.alpha = 1;
+                startButtonCanvasGroup.interactable = true;
+
+                readyButtonCanvasGroup.alpha = 0;
+                readyButtonCanvasGroup.interactable = false;
             }
             playerName = nick_name;                
         }   
@@ -105,7 +116,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         else if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
             playerName = "tom";
-            PhotonNetwork.LocalPlayer.JoinTeam(4);
+            PhotonNetwork.LocalPlayer.JoinTeam(1);
 
             mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test3" + ".json");
 
@@ -114,9 +125,14 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             playerName = "sally";           
            
-            PhotonNetwork.LocalPlayer.JoinTeam(1);    
-            
-            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test10" + ".json");
+            PhotonNetwork.LocalPlayer.JoinTeam(2);
+            //startButtonCanvasGroup.alpha = 1;
+            //startButtonCanvasGroup.interactable = true;
+
+            //readyButtonCanvasGroup.alpha = 0;
+            //readyButtonCanvasGroup.interactable = false;
+
+            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
         }
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
@@ -128,7 +144,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         roomOptions.CustomRoomProperties.Add("SecondsPerRound", secondsPerRound);
         roomOptions.CustomRoomProperties.Add("TotalNumberOfRounds", totalNumberOfRounds);
         roomOptions.CustomRoomProperties.Add("PointsPerToggle", pointsPerToggle);
-        roomOptions.CustomRoomProperties.Add("PointsPerEndpoint", pointsPerEndPoint);  
+        roomOptions.CustomRoomProperties.Add("PointsPerEndpoint", pointsPerEndPoint);
+        roomOptions.CustomRoomProperties.Add("TotalNumberOfSteals", totalNumberOfSteals);
         roomOptions.CustomRoomProperties.Add("MapJSON", mapJSON);      
     }
 
