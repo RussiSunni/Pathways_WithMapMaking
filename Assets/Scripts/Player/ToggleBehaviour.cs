@@ -26,42 +26,42 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     public GameObject[] greenTeamStartPoints;
     List<GameObject[]> _teamStartPoints = new List<GameObject[]>();
     List<string> _startPointTagNames = new List<string>();
-    Collider2D thisCollider;
+
+    [SerializeField]
+    BoxCollider2D thisCollider;
 
     void Start()
-    {
-       
-        // Fill list of team colours.
-        //_teamColours.Add(_yellowTeamConnectedColor);
-        //_teamColours.Add(_blueTeamConnectedColor);
-        //_teamColours.Add(_redTeamConnectedColor);
-        //_teamColours.Add(_purpleTeamConnectedColor);
-        //_teamColours.Add(_orangeTeamConnectedColor);
-        //_teamColours.Add(_greenTeamConnectedColor);
+    {      
+         // Fill list of team colours.
+         //_teamColours.Add(_yellowTeamConnectedColor);
+         //_teamColours.Add(_blueTeamConnectedColor);
+         //_teamColours.Add(_redTeamConnectedColor);
+         //_teamColours.Add(_purpleTeamConnectedColor);
+         //_teamColours.Add(_orangeTeamConnectedColor);
+         //_teamColours.Add(_greenTeamConnectedColor);
 
-        // Fill list of team startpoints.
-        //_teamStartPoints.Add(yellowTeamStartPoints);
-        //_teamStartPoints.Add(blueTeamStartPoints);
-        //_teamStartPoints.Add(redTeamStartPoints);
-        //_teamStartPoints.Add(purpleTeamStartPoints);
-        //_teamStartPoints.Add(orangeTeamStartPoints);
-        //_teamStartPoints.Add(greenTeamStartPoints);
+         // Fill list of team startpoints.
+         //_teamStartPoints.Add(yellowTeamStartPoints);
+         //_teamStartPoints.Add(blueTeamStartPoints);
+         //_teamStartPoints.Add(redTeamStartPoints);
+         //_teamStartPoints.Add(purpleTeamStartPoints);
+         //_teamStartPoints.Add(orangeTeamStartPoints);
+         //_teamStartPoints.Add(greenTeamStartPoints);
 
-        // Fill list of team startpoints tag names.
-        //_startPointTagNames.Add("Yellow Team StartPoint");
-        //_startPointTagNames.Add("Blue Team StartPoint");
-        //_startPointTagNames.Add("Red Team StartPoint");
-        //_startPointTagNames.Add("Purple Team StartPoint");
-        //_startPointTagNames.Add("Orange Team StartPoint");
-        //_startPointTagNames.Add("Green Team StartPoint");
+         // Fill list of team startpoints tag names.
+         //_startPointTagNames.Add("Yellow Team StartPoint");
+         //_startPointTagNames.Add("Blue Team StartPoint");
+         //_startPointTagNames.Add("Red Team StartPoint");
+         //_startPointTagNames.Add("Purple Team StartPoint");
+         //_startPointTagNames.Add("Orange Team StartPoint");
+         //_startPointTagNames.Add("Green Team StartPoint");
 
-        _sprite = GetComponent<SpriteRenderer>();      
+         _sprite = GetComponent<SpriteRenderer>();      
         _originalParent = transform.parent;
 
         toggles = GameObject.FindGameObjectsWithTag("Toggle");         
        
-        thisCollider = GetComponent<Collider2D>();
-        Debug.Log(thisCollider.bounciness);
+       // thisCollider = GetComponent<Collider2D>();       
     }
 
     void Update()
@@ -522,18 +522,23 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         {
                             int numChildren = transform.childCount;
 
-                            for (int i = 0; i < numChildren; i++)
+                            Debug.Log("numChildren = " + numChildren);
+
+                            //for (int i = 0; i < numChildren; i++)
+                            //{
+                            //    Debug.Log("i = " + i);
+                            //    if (numChildren > i)
+                            //    {                               
+                            //        transform.GetChild(i).parent = _originalParent;                                  
+                            //    }
+                            //}
+                            for (int i = 0; i < toggles.Length; i++)
                             {
-                                if (numChildren > i)
-                                {
-                                    transform.GetChild(i).parent = _originalParent;
-                                }
+                                toggles[i].transform.parent = _originalParent;                                  
                             }
 
-                            //transform.parent = _originalParent;
-                            //_sprite.color = _disconnectedColor;
 
-                            transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);
+                            transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);                            
 
                             // Reduce turns in round remaining for all team members.                       
                             photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
@@ -652,15 +657,17 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         }
         else if (stream.IsReading)
         {
-            int numChildren = transform.childCount;
+            //int numChildren = transform.childCount;
 
-            for (int i = 0; i < numChildren; i++)
+            //for (int i = 0; i < numChildren; i++)
+            //{
+            //    transform.GetChild(i).parent = _originalParent;
+            //}
+
+            for (int i = 0; i < toggles.Length; i++)
             {
-                transform.GetChild(i).parent = _originalParent;
+                toggles[i].transform.parent = _originalParent;
             }
-
-            //transform.parent = _originalParent;
-            //_sprite.color = _disconnectedColor;
 
             transform.rotation = (Quaternion)stream.ReceiveNext();
         }
