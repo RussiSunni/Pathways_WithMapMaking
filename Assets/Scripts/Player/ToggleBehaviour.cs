@@ -159,7 +159,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < toggles.Length; i++)
         {
             // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
             {
                 // If that toggle in a descendant of the startpoint...
                 if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
@@ -208,7 +208,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < toggles.Length; i++)
         {
             // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
             {
                 // If that toggle in a descendant of the startpoint...
                 if (toggles[i].transform.root.tag == "Blue Team StartPoint")
@@ -257,7 +257,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < toggles.Length; i++)
         {
             // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
             {
                 // If that toggle in a descendant of the startpoint...
                 if (toggles[i].transform.root.tag == "Red Team StartPoint")
@@ -306,7 +306,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < toggles.Length; i++)
         {
             // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
             {
                 // If that toggle in a descendant of the startpoint...
                 if (toggles[i].transform.root.tag == "Purple Team StartPoint")
@@ -355,7 +355,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < toggles.Length; i++)
         {
             // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
             {
                 // If that toggle in a descendant of the startpoint...
                 if (toggles[i].transform.root.tag == "Orange Team StartPoint")
@@ -404,7 +404,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < toggles.Length; i++)
         {
             // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
             {
                 // If that toggle in a descendant of the startpoint...
                 if (toggles[i].transform.root.tag == "Green Team StartPoint")
