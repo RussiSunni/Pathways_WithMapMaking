@@ -41,7 +41,7 @@ public class MapLoadManager : MonoBehaviour
     {
         //string json = File.ReadAllText(Application.dataPath + "/Maps/" + _mapName + ".json");       
 
-        string json = (string)Launcher.roomOptions.CustomRoomProperties["MapJSON"];
+        string json = (string)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MapJSON"];
 
         MapData data = JsonUtility.FromJson<MapData>(json);
 

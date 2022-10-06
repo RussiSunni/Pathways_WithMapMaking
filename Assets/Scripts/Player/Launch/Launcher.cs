@@ -34,23 +34,28 @@ public class Launcher : MonoBehaviourPunCallbacks
     string playerName = "";
     string roomName = "";
 
-    int totalNumberOfRounds = 2;
-    int movesPerRound = 30;
-    float secondsPerRound = 1000;
-    int pointsPerToggle = 1;
-    int pointsPerEndPoint = 50;
-    int totalNumberOfSteals = 6;
-    string mapJSON;
+    //int totalNumberOfRounds = 2;
+    //int movesPerRound = 30;
+    //float secondsPerRound = 1000;
+    //int pointsPerToggle = 1;
+    //int pointsPerEndPoint = 50;
+    //int totalNumberOfSteals = 6;
+    //string mapJSON;
 
     // Make the room options a global variable.
-    public static RoomOptions roomOptions = new RoomOptions();
+    //public static RoomOptions roomOptions = new RoomOptions();
+
+    void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
 
     void Start()
     { 
         PlayerPrefs.DeleteAll();
         Debug.Log("Connecting to Photon Network");
 
-        ConnectToPhoton();
+      //  ConnectToPhoton();
 
         Debug.Log(Application.platform);
 
@@ -67,14 +72,14 @@ public class Launcher : MonoBehaviourPunCallbacks
             string pointsPerToggleString = HttpUtility.ParseQueryString(uri.Query).Get("toggle_points");
             string pointsPerEndPointString = HttpUtility.ParseQueryString(uri.Query).Get("endpoint_points");
             string totalNumberOfStealsString = HttpUtility.ParseQueryString(uri.Query).Get("steals");
-            mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
+            //mapJSON = HttpUtility.ParseQueryString(uri.Query).Get("map");
 
-            totalNumberOfRounds = int.Parse(roundsString);
-            movesPerRound = int.Parse(movesString);
-            secondsPerRound = float.Parse(secondsString);
-            pointsPerToggle = int.Parse(pointsPerToggleString);
-            pointsPerEndPoint = int.Parse(pointsPerEndPointString);
-            totalNumberOfSteals = int.Parse(totalNumberOfStealsString);
+            //totalNumberOfRounds = int.Parse(roundsString);
+            //movesPerRound = int.Parse(movesString);
+            //secondsPerRound = float.Parse(secondsString);
+            //pointsPerToggle = int.Parse(pointsPerToggleString);
+            //pointsPerEndPoint = int.Parse(pointsPerEndPointString);
+            //totalNumberOfSteals = int.Parse(totalNumberOfStealsString);
 
             if (team == "Yellow")
             {
@@ -116,91 +121,88 @@ public class Launcher : MonoBehaviourPunCallbacks
         else if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
             playerName = "tom";
-            PhotonNetwork.LocalPlayer.JoinTeam(1);
+           // PhotonNetwork.LocalPlayer.JoinTeam(1);
 
-            mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test3" + ".json");
+           // mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test3" + ".json");
 
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";           
            
-            PhotonNetwork.LocalPlayer.JoinTeam(2);
+          //  PhotonNetwork.LocalPlayer.JoinTeam(2);
             //startButtonCanvasGroup.alpha = 1;
             //startButtonCanvasGroup.interactable = true;
 
             //readyButtonCanvasGroup.alpha = 0;
             //readyButtonCanvasGroup.interactable = false;
 
-            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
+          //  mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
         }
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
 
-        // Total moves per round setting.
-        // Preparing the room options.
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
-        roomOptions.CustomRoomProperties.Add("MovesPerRound", movesPerRound);
-        roomOptions.CustomRoomProperties.Add("SecondsPerRound", secondsPerRound);
-        roomOptions.CustomRoomProperties.Add("TotalNumberOfRounds", totalNumberOfRounds);
-        roomOptions.CustomRoomProperties.Add("PointsPerToggle", pointsPerToggle);
-        roomOptions.CustomRoomProperties.Add("PointsPerEndpoint", pointsPerEndPoint);
-        roomOptions.CustomRoomProperties.Add("TotalNumberOfSteals", totalNumberOfSteals);
-        roomOptions.CustomRoomProperties.Add("MapJSON", mapJSON);      
-    }
+        //// Preparing the room options.
+        //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+        //roomOptions.CustomRoomProperties.Add("MovesPerRound", movesPerRound);
+        //roomOptions.CustomRoomProperties.Add("SecondsPerRound", secondsPerRound);
+        //roomOptions.CustomRoomProperties.Add("TotalNumberOfRounds", totalNumberOfRounds);
+        //roomOptions.CustomRoomProperties.Add("PointsPerToggle", pointsPerToggle);
+        //roomOptions.CustomRoomProperties.Add("PointsPerEndpoint", pointsPerEndPoint);
+        //roomOptions.CustomRoomProperties.Add("TotalNumberOfSteals", totalNumberOfSteals);
+        //roomOptions.CustomRoomProperties.Add("MapJSON", mapJSON);
 
-    void Awake()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
 
-    void ConnectToPhoton()
-    {
-        connectionStatus.text = "Connecting...";
-        PhotonNetwork.GameVersion = gameVersion;
-        PhotonNetwork.ConnectUsingSettings();
-    }
-
-    public void JoinRoom()
-    {
-        if (PhotonNetwork.IsConnected)
-        {
-            Debug.Log("PhotonNetwork.IsConnected! | Trying to Create/Join Room");
-            TypedLobby typedLobby = new TypedLobby(roomName, LobbyType.Default);
-            PhotonNetwork.JoinOrCreateRoom("Pathways", roomOptions, typedLobby);
-        }
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("connected to master");
-        base.OnConnectedToMaster();       
-    }
-
-    public void LoadArena()
-    {
         PhotonNetwork.LoadLevel("Main");
-    }
+    }   
+
+    //void ConnectToPhoton()
+    //{
+    //    connectionStatus.text = "Connecting...";
+    //    PhotonNetwork.GameVersion = gameVersion;
+    //    PhotonNetwork.ConnectUsingSettings();
+    //}
+
+    //public void JoinRoom()
+    //{
+    //    if (PhotonNetwork.IsConnected)
+    //    {
+    //        Debug.Log("PhotonNetwork.IsConnected! | Trying to Create/Join Room");
+    //        TypedLobby typedLobby = new TypedLobby(roomName, LobbyType.Default);
+    //        PhotonNetwork.JoinOrCreateRoom("Pathways", roomOptions, typedLobby);
+    //    }
+    //}
+
+    //public override void OnConnectedToMaster()
+    //{
+    //    Debug.Log("connected to master");
+    //    base.OnConnectedToMaster();       
+    //}
+
+    //public void LoadArena()
+    //{
+    //    PhotonNetwork.LoadLevel("Main");
+    //}
 
     // Photon Methods
-    public override void OnConnected()
-    {
-        base.OnConnected();
+    //public override void OnConnected()
+    //{
+    //    base.OnConnected();
 
-        connectionStatus.text = "Connected";
-        connectionStatus.color = Color.green;
-        readyButtonCanvasGroup.interactable = true;
-    }
+    //    connectionStatus.text = "Connected";
+    //    connectionStatus.color = Color.green;
+    //    readyButtonCanvasGroup.interactable = true;
+    //}
 
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        isConnecting = false;
-        controlPanel.SetActive(true);
-        Debug.LogError("Disconnected. Please check your Internet connection.");
-    }
+    //public override void OnDisconnected(DisconnectCause cause)
+    //{
+    //    isConnecting = false;
+    //    controlPanel.SetActive(true);
+    //    Debug.LogError("Disconnected. Please check your Internet connection.");
+    //}
 
-    public override void OnJoinedRoom()
-    {
-       LoadArena();
-    }
+    //public override void OnJoinedRoom()
+    //{
+    //   LoadArena();
+    //}
 }

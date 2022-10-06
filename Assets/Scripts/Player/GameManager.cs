@@ -56,12 +56,12 @@ public class GameManager : MonoBehaviourPun
     {     
         SceneManager.sceneLoaded += OnSceneLoaded;      
 
-        MovesInRoundRemaining = (int)Launcher.roomOptions.CustomRoomProperties["MovesPerRound"];
-        SecondsInRoundRemaining = (float)Launcher.roomOptions.CustomRoomProperties["SecondsPerRound"];
-        TotalNumberOfRounds = (int)Launcher.roomOptions.CustomRoomProperties["TotalNumberOfRounds"];
-        PointsPerToggle = (int)Launcher.roomOptions.CustomRoomProperties["PointsPerToggle"];
-        PointsPerEndpoint = (int)Launcher.roomOptions.CustomRoomProperties["PointsPerEndpoint"];
-        NumberOfStealsRemaining = (int)Launcher.roomOptions.CustomRoomProperties["TotalNumberOfSteals"];
+        MovesInRoundRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MovesPerRound"];
+        SecondsInRoundRemaining = (float)CreateAndJoinRooms.roomOptions.CustomRoomProperties["SecondsPerRound"];
+        TotalNumberOfRounds = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["TotalNumberOfRounds"];
+        PointsPerToggle = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["PointsPerToggle"];
+        PointsPerEndpoint = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["PointsPerEndpoint"];
+        NumberOfStealsRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["TotalNumberOfSteals"];
 
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
         {
@@ -302,8 +302,8 @@ public class GameManager : MonoBehaviourPun
             // Reset the parameters for the next round.
             RoundScore = 0;
             RoundScoreText.text = RoundScore.ToString();
-            MovesInRoundRemaining = (int)Launcher.roomOptions.CustomRoomProperties["MovesPerRound"];
-            SecondsInRoundRemaining = (float)Launcher.roomOptions.CustomRoomProperties["SecondsPerRound"];
+            MovesInRoundRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MovesPerRound"];
+            SecondsInRoundRemaining = (float)CreateAndJoinRooms.roomOptions.CustomRoomProperties["SecondsPerRound"];
         }
     }
 
