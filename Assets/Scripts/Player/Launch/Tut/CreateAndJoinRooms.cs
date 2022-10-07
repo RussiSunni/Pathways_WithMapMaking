@@ -32,7 +32,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     int pointsPerToggle = 1;
     int pointsPerEndPoint = 50;
     int totalNumberOfSteals = 6;
-    string mapJSON;  
+    string mapJSON;
+
+    // Countdown timer.
+    bool isCountDownStarted;
+    float timeRemaining = 10;
+    public Text _timeRemainingText;
 
     private void Start()
     {
@@ -165,7 +170,15 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        StartCoroutine(ExecuteAfterTime(2));
+    }
+
+    IEnumerator ExecuteAfterTime(float time)
+    {
         roomNotCreatedYetTextCanvasGroup.alpha = 1;
+        yield return new WaitForSeconds(time);
+
+        roomNotCreatedYetTextCanvasGroup.alpha = 0;
     }
 
     public override void OnJoinedRoom()
@@ -177,12 +190,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             startGameCanvasGroup.alpha = 1;
             startGameCanvasGroup.interactable = true;
         }          
-        //base.OnJoinedRoom();       
+        base.OnJoinedRoom();       
     }
 
     public void StartGame()
-    {
-        photonView.RPC("StartGameRPC", RpcTarget.All);       
+    {      
+        isCountDownStarted = true;
     }
 
     [PunRPC]
@@ -200,8 +213,35 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    void DecreaseTimeRemainingRPC(float timeRemaining)
+    {
+        float roundedTimeRemaining = UnityEngine.Mathf.Round(timeRemaining);
+        _timeRemainingText.text = roundedTimeRemaining.ToString();
+    }
+
+    [PunRPC]
     void StartGameRPC()
     {
         PhotonNetwork.LoadLevel("Main");
+    }
+
+    void Update()
+    {
+        // Time remaining
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            if (isCountDownStarted)
+            {
+                if (timeRemaining > 0)
+                {
+                    timeRemaining -= Time.deltaTime;
+                    photonView.RPC("DecreaseTimeRemainingRPC", RpcTarget.All, timeRemaining);
+                }
+                else
+                {
+                    photonView.RPC("StartGameRPC", RpcTarget.All);
+                }
+            }     
+        }        
     }
 }
