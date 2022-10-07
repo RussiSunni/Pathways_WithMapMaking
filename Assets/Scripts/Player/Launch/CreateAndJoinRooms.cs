@@ -58,7 +58,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         {
             playerName = "sally";
             mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test6" + ".json");
-            PhotonNetwork.LocalPlayer.JoinTeam(0);
+            PhotonNetwork.LocalPlayer.JoinTeam(1);
         }
 
         // --------------------
@@ -197,8 +197,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     }
 
     public void StartGame()
-    {      
-        isCountDownStarted = true;
+    {
+        photonView.RPC("StartGameRPC", RpcTarget.All);
     }
 
     [PunRPC]
@@ -242,7 +242,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    photonView.RPC("StartGameRPC", RpcTarget.All);
+                    
                 }
             }     
         }        
