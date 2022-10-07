@@ -618,35 +618,13 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     //    {
     //        _sprite.color = _disconnectedColor;
     //    }  
-    //}
-
-    //private void OnTriggerStay2D(Collider2D collider)
-    //{       
-    //    if (collider.gameObject.tag == "Yellow Team StartPoint")
-    //    {
-    //        _sprite.color = _yellowTeamConnectedColor;
-    //        gameObject.transform.parent = collider.transform;
-    //    }
-    //    else if (collider.transform.root.tag == "Yellow Team StartPoint")
-    //    {
-    //        _sprite.color = _yellowTeamConnectedColor;
-    //        gameObject.transform.parent = collider.transform;
-    //    }       
-    //    else
-    //    {          
-    //        _sprite.color = _disconnectedColor;
-    //    }
-    //}
+    //} 
 
     //private void OnCollisionExit2D(Collision2D collision)
     //{
     //    _sprite.color = _disconnectedColor;
     //}
-
-    //private void OnTriggerExit2D(Collider2D collider)
-    //{  
-    //   _sprite.color = _disconnectedColor;
-    //}
+      
 
     // For other clients.
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

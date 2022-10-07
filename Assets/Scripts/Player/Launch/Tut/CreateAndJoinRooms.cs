@@ -16,7 +16,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public CanvasGroup createRoomCanvasGroup;
     public CanvasGroup joinRoomCanvasGroup;
+    public CanvasGroup startGameCanvasGroup;
     public CanvasGroup roomNotCreatedYetTextCanvasGroup;
+    public CanvasGroup playerListHeadingTextCanvasGroup;
+    public Text playerListText;
+    List<string> playerList = new List<string>();
 
     string roomName;
     string playerName = "";
@@ -41,14 +45,18 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
             playerName = "tom";
-            PhotonNetwork.LocalPlayer.JoinTeam(0);
+            PhotonNetwork.LocalPlayer.JoinTeam(1);
             mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test3" + ".json");
+
+            playerListText.GetComponent<CanvasGroup>().alpha = 0;
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";
             mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
-            PhotonNetwork.LocalPlayer.JoinTeam(1);
+
+            PhotonNetwork.LocalPlayer.JoinTeam(0);
+            playerListText.GetComponent<CanvasGroup>().alpha = 1;
         }
 
         // --------------------
@@ -130,6 +138,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             createRoomCanvasGroup.interactable = true;
             joinRoomCanvasGroup.alpha = 0;
             joinRoomCanvasGroup.interactable = false;
+            playerListHeadingTextCanvasGroup.alpha = 1;
         }
         else 
         {
@@ -137,13 +146,17 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             createRoomCanvasGroup.interactable = false;
             joinRoomCanvasGroup.alpha = 1;
             joinRoomCanvasGroup.interactable = true;
+            playerListHeadingTextCanvasGroup.alpha = 0;
         }
+
+        startGameCanvasGroup.alpha = 0;
+        startGameCanvasGroup.interactable = false;
     }
 
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(roomName, roomOptions);
-    }
+    }  
 
     public void JoinRoom()
     {
@@ -157,7 +170,38 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Main");
+        photonView.RPC("ReadyNotificationRPC", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName);
+
+        if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
+        {
+            startGameCanvasGroup.alpha = 1;
+            startGameCanvasGroup.interactable = true;
+        }          
         //base.OnJoinedRoom();       
-    }  
+    }
+
+    public void StartGame()
+    {
+        photonView.RPC("StartGameRPC", RpcTarget.All);       
+    }
+
+    [PunRPC]
+    void ReadyNotificationRPC(string playerName)
+    {     
+        playerList.Add(playerName);
+        string playerListString = "";
+           
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            playerListString = playerListString + System.Environment.NewLine + playerList[i];
+        }
+          
+        playerListText.text = playerListString;       
+    }
+
+    [PunRPC]
+    void StartGameRPC()
+    {
+        PhotonNetwork.LoadLevel("Main");
+    }
 }
