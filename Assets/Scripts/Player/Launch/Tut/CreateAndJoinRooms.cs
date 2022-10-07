@@ -16,6 +16,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public CanvasGroup createRoomCanvasGroup;
     public CanvasGroup joinRoomCanvasGroup;
+    public Image joinRoomButtonImage;
     public CanvasGroup startGameCanvasGroup;
     public CanvasGroup roomNotCreatedYetTextCanvasGroup;
     public CanvasGroup playerListHeadingTextCanvasGroup;
@@ -189,7 +190,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         {
             startGameCanvasGroup.alpha = 1;
             startGameCanvasGroup.interactable = true;
-        }          
+        }
+        else
+        {
+            joinRoomButtonImage.color = Color.green;
+        }
         base.OnJoinedRoom();       
     }
 

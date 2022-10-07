@@ -1520,6 +1520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createRoomCanvasGroup: {fileID: 1406141968}
   joinRoomCanvasGroup: {fileID: 1600328971}
+  joinRoomButtonImage: {fileID: 1600328969}
   startGameCanvasGroup: {fileID: 1984146495}
   roomNotCreatedYetTextCanvasGroup: {fileID: 178101455}
   playerListHeadingTextCanvasGroup: {fileID: 1128504613}
