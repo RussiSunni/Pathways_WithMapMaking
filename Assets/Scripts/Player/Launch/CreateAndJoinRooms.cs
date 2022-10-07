@@ -51,18 +51,14 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
             playerName = "tom";
-            PhotonNetwork.LocalPlayer.JoinTeam(1);
-            mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test3" + ".json");
-
-            playerListText.GetComponent<CanvasGroup>().alpha = 0;
+            PhotonNetwork.LocalPlayer.JoinTeam(0);
+            mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test6" + ".json");           
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";
-            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test3" + ".json");
-
+            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test6" + ".json");
             PhotonNetwork.LocalPlayer.JoinTeam(0);
-            playerListText.GetComponent<CanvasGroup>().alpha = 1;
         }
 
         // --------------------
@@ -145,6 +141,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             joinRoomCanvasGroup.alpha = 0;
             joinRoomCanvasGroup.interactable = false;
             playerListHeadingTextCanvasGroup.alpha = 1;
+            playerListText.GetComponent<CanvasGroup>().alpha = 1;
         }
         else 
         {
@@ -153,6 +150,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             joinRoomCanvasGroup.alpha = 1;
             joinRoomCanvasGroup.interactable = true;
             playerListHeadingTextCanvasGroup.alpha = 0;
+            playerListText.GetComponent<CanvasGroup>().alpha = 0;
         }
 
         startGameCanvasGroup.alpha = 0;
@@ -183,7 +181,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinedRoom()
-    {
+    {     
         photonView.RPC("ReadyNotificationRPC", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName);
 
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
