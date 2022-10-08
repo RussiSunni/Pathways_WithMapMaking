@@ -39,6 +39,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     bool isCountDownStarted;
     float timeRemaining = 10;
     public Text _timeRemainingText;
+    bool isLoadLevelCalled;
 
     private void Start()
     {
@@ -51,14 +52,14 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
             playerName = "tom";
-            PhotonNetwork.LocalPlayer.JoinTeam(0);
+            PhotonNetwork.LocalPlayer.JoinTeam(1);
             mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test6" + ".json");           
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";
             mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test6" + ".json");
-            PhotonNetwork.LocalPlayer.JoinTeam(1);
+            PhotonNetwork.LocalPlayer.JoinTeam(0);
         }
 
         // --------------------
@@ -198,7 +199,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        photonView.RPC("StartGameRPC", RpcTarget.All);
+        //photonView.RPC("StartGameRPC", RpcTarget.All);
+        isCountDownStarted = true;
     }
 
     [PunRPC]
@@ -240,9 +242,10 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
                     timeRemaining -= Time.deltaTime;
                     photonView.RPC("DecreaseTimeRemainingRPC", RpcTarget.All, timeRemaining);
                 }
-                else
+                else if (!isLoadLevelCalled)
                 {
-                    
+                    isLoadLevelCalled = true;
+                    photonView.RPC("StartGameRPC", RpcTarget.All);
                 }
             }     
         }        
