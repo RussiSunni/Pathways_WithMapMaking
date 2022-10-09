@@ -19,6 +19,8 @@ public class EndPointBehaviour : MonoBehaviour
     Collider2D thisCollider;
     public GameObject[] toggles;
 
+    public bool isConnectedToYellow;
+
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
@@ -31,81 +33,111 @@ public class EndPointBehaviour : MonoBehaviour
         thisCollider = GetComponent<Collider2D>();
     }
 
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // For all the toggles.
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // if any of them overlap this endpoint.
-            if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
-            {
-                // If it belongs to the yellow team.
-                if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
-                {
-                    _sprite.color = _yellowTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+        StartCoroutine(ExecuteAfterTimeEnter(0.1f, collision));       
+    }
 
-                    // If so, exit the Update method.
-                    return;
-                }
-                // If it belongs to the blue team.
-                else if (toggles[i].transform.root.tag == "Blue Team StartPoint")
-                {
-                    _sprite.color = _blueTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+    IEnumerator ExecuteAfterTimeEnter(float time, Collider2D collision)
+    {
+        yield return new WaitForSeconds(time);
 
-                    // If so, exit the Update method.
-                    return;
-                }
-                // If it belongs to the red team.
-                else if (toggles[i].transform.root.tag == "Red Team StartPoint")
-                {
-                    _sprite.color = _redTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
-
-                    // If so, exit the Update method.
-                    return;
-                }
-                // If it belongs to the purple team.
-                else if (toggles[i].transform.root.tag == "Purple Team StartPoint")
-                {
-                    _sprite.color = _purpleTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
-
-                    // If so, exit the Update method.
-                    return;
-                }
-                // If it belongs to the orange team.
-                else if (toggles[i].transform.root.tag == "Orange Team StartPoint")
-                {
-                    _sprite.color = _orangeTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
-
-                    // If so, exit the Update method.
-                    return;
-                }
-                // If it belongs to the green team.
-                else if (toggles[i].transform.root.tag == "Green Team StartPoint")
-                {
-                    _sprite.color = _greenTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
-
-                    // If so, exit the Update method.
-                    return;
-                }
-                // if not...
-                else
-                {
-                    _sprite.color = _disconnectedColor;
-                    gameObject.transform.parent = _originalParent;
-                }
-            }
-            // if not...
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
+        if (collision.transform.root.tag == "Yellow Team StartPoint")
+        {           
+            _sprite.color = _yellowTeamConnectedColor;
+            isConnectedToYellow = true;
+            gameObject.transform.parent = collision.transform;         
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {    
+        _sprite.color = _disconnectedColor;
+        gameObject.transform.parent = _originalParent;
+        StartCoroutine(ExecuteAfterTimeExit(0.1f, collision));
+    }
+
+    IEnumerator ExecuteAfterTimeExit(float time, Collider2D collision)
+    {
+        yield return new WaitForSeconds(time);
+        isConnectedToYellow = false;     
+    }
+
+    //private void Update()
+    //{
+    //    // For all the toggles.
+    //    for (int i = 0; i < toggles.Length; i++)
+    //    {
+    //        // if any of them overlap this endpoint.
+    //        if (thisCollider.bounds.Intersects(toggles[i].GetComponent<BoxCollider2D>().bounds))
+    //        {
+    //            // If it belongs to the yellow team.
+    //            if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
+    //            {
+    //                _sprite.color = _yellowTeamConnectedColor;
+    //                gameObject.transform.parent = toggles[i].transform;
+
+    //                // If so, exit the Update method.
+    //                return;
+    //            }
+    //            // If it belongs to the blue team.
+    //            else if (toggles[i].transform.root.tag == "Blue Team StartPoint")
+    //            {
+    //                _sprite.color = _blueTeamConnectedColor;
+    //                gameObject.transform.parent = toggles[i].transform;
+
+    //                // If so, exit the Update method.
+    //                return;
+    //            }
+    //            // If it belongs to the red team.
+    //            else if (toggles[i].transform.root.tag == "Red Team StartPoint")
+    //            {
+    //                _sprite.color = _redTeamConnectedColor;
+    //                gameObject.transform.parent = toggles[i].transform;
+
+    //                // If so, exit the Update method.
+    //                return;
+    //            }
+    //            // If it belongs to the purple team.
+    //            else if (toggles[i].transform.root.tag == "Purple Team StartPoint")
+    //            {
+    //                _sprite.color = _purpleTeamConnectedColor;
+    //                gameObject.transform.parent = toggles[i].transform;
+
+    //                // If so, exit the Update method.
+    //                return;
+    //            }
+    //            // If it belongs to the orange team.
+    //            else if (toggles[i].transform.root.tag == "Orange Team StartPoint")
+    //            {
+    //                _sprite.color = _orangeTeamConnectedColor;
+    //                gameObject.transform.parent = toggles[i].transform;
+
+    //                // If so, exit the Update method.
+    //                return;
+    //            }
+    //            // If it belongs to the green team.
+    //            else if (toggles[i].transform.root.tag == "Green Team StartPoint")
+    //            {
+    //                _sprite.color = _greenTeamConnectedColor;
+    //                gameObject.transform.parent = toggles[i].transform;
+
+    //                // If so, exit the Update method.
+    //                return;
+    //            }
+    //            // if not...
+    //            else
+    //            {
+    //                _sprite.color = _disconnectedColor;
+    //                gameObject.transform.parent = _originalParent;
+    //            }
+    //        }
+    //        // if not...
+    //        else
+    //        {
+    //            _sprite.color = _disconnectedColor;
+    //            gameObject.transform.parent = _originalParent;
+    //        }
+    //    }
+    //}
 }

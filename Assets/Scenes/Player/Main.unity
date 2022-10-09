@@ -357,6 +357,7 @@ MonoBehaviour:
   _roundNumberText: {fileID: 0}
   _movesRemainingText: {fileID: 0}
   _timeRemainingText: {fileID: 0}
+  NumberOfStealsRemainingText: {fileID: 0}
   _infoPanelCanvasGroup: {fileID: 0}
 --- !u!1 &469087496
 GameObject:

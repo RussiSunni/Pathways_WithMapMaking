@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviourPun
     private Color _redTeamConnectedColor = new Color(1, 0, 0, 1);
     private Color _purpleTeamConnectedColor = new Color(1, 0, 1, 1);
     private Color _orangeTeamConnectedColor = new Color(1, 0.65f, 0, 1);
-    private Color _greenTeamConnectedColor = new Color(0, 1, 0, 1);   
+    private Color _greenTeamConnectedColor = new Color(0, 1, 0, 1);  
+
 
     private void Awake()
     {
@@ -49,11 +50,11 @@ public class GameManager : MonoBehaviourPun
     {
         _infoPanelCanvasGroup.alpha = 1;
         _isGameStarted = true;
-        TotalScoreText.text = _totalScore.ToString();
+        TotalScoreText.text = _totalScore.ToString();     
     }
 
     void Start()
-    {     
+    {      
         SceneManager.sceneLoaded += OnSceneLoaded;      
 
         MovesInRoundRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MovesPerRound"];
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviourPun
         _roundNumberText.text = _roundNumber.ToString();
         _movesRemainingText.text = MovesInRoundRemaining.ToString();
         _timeRemainingText.text = SecondsInRoundRemaining.ToString();
-        NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
+        NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();       
     }
 
     public void Update()
@@ -124,7 +125,7 @@ public class GameManager : MonoBehaviourPun
                             {
                                 numberOfEndPoints++;
                             }
-                        }
+                        }               
                         RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
                     }
                 }

@@ -17,7 +17,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     private Color _disconnectedColor = new Color(1, 1, 1, 1);
     private Transform _originalParent;
 
-    public GameObject[] toggles;  
+    public GameObject[] toggles;
+    public GameObject[] endPoints;
     public GameObject[] yellowTeamStartPoints;
     public GameObject[] blueTeamStartPoints;
     public GameObject[] redTeamStartPoints;
@@ -59,7 +60,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
          _sprite = GetComponent<SpriteRenderer>();      
         _originalParent = transform.parent;
 
-        toggles = GameObject.FindGameObjectsWithTag("Toggle");         
+        endPoints = GameObject.FindGameObjectsWithTag("EndPoint");
+        toggles = GameObject.FindGameObjectsWithTag("Toggle");    
        
        // thisCollider = GetComponent<Collider2D>();       
     }
@@ -522,7 +524,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         {
                             int numChildren = transform.childCount;
 
-                          //  Debug.Log("numChildren = " + numChildren);
+                            //  Debug.Log("numChildren = " + numChildren);
 
                             //for (int i = 0; i < numChildren; i++)
                             //{
@@ -532,8 +534,13 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                             //        transform.GetChild(i).parent = _originalParent;                                  
                             //    }
                             //}
-                            for (int i = 0; i < toggles.Length; i++)
+                            for (int i = 0; i < endPoints.Length; i++)
                             {
+                                endPoints[i].transform.parent = _originalParent;
+                               
+                            }
+                            for (int i = 0; i < toggles.Length; i++)
+                            {                            
                                 toggles[i].transform.parent = _originalParent;                                  
                             }
 
