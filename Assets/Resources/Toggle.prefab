@@ -135,6 +135,7 @@ MonoBehaviour:
   purpleTeamStartPoints: []
   orangeTeamStartPoints: []
   greenTeamStartPoints: []
+  isCheckToggles: 0
   thisCollider: {fileID: 5835275190783644821}
 --- !u!114 &4341992047450890084
 MonoBehaviour:
