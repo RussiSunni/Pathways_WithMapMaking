@@ -68,19 +68,13 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        // Find all owned start points -----------------        
-        // Find all startpoints owned by yellow team.
-        yellowTeamStartPoints = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint");
-        // Find all startpoints owned by blue team.
-        blueTeamStartPoints = GameObject.FindGameObjectsWithTag("Blue Team StartPoint");
-        // Find all startpoints owned by yellow team.
-        redTeamStartPoints = GameObject.FindGameObjectsWithTag("Red Team StartPoint");
-        // Find all startpoints owned by blue team.
-        purpleTeamStartPoints = GameObject.FindGameObjectsWithTag("Purple Team StartPoint");
-        // Find all startpoints owned by yellow team.
-        orangeTeamStartPoints = GameObject.FindGameObjectsWithTag("Orange Team StartPoint");
-        // Find all startpoints owned by blue team.
-        greenTeamStartPoints = GameObject.FindGameObjectsWithTag("Green Team StartPoint");
+        //// Find all owned start points -----------------        
+        //yellowTeamStartPoints = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint");
+        //blueTeamStartPoints = GameObject.FindGameObjectsWithTag("Blue Team StartPoint");
+        //redTeamStartPoints = GameObject.FindGameObjectsWithTag("Red Team StartPoint");
+        //purpleTeamStartPoints = GameObject.FindGameObjectsWithTag("Purple Team StartPoint");
+        //orangeTeamStartPoints = GameObject.FindGameObjectsWithTag("Orange Team StartPoint");
+        //greenTeamStartPoints = GameObject.FindGameObjectsWithTag("Green Team StartPoint");
 
         // trying to make one look for all teams.
 
@@ -522,22 +516,9 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
                         if (!isSteal || GameManager.NumberOfStealsRemaining > 0)
                         {
-                            int numChildren = transform.childCount;
-
-                            //  Debug.Log("numChildren = " + numChildren);
-
-                            //for (int i = 0; i < numChildren; i++)
-                            //{
-                            //    Debug.Log("i = " + i);
-                            //    if (numChildren > i)
-                            //    {                               
-                            //        transform.GetChild(i).parent = _originalParent;                                  
-                            //    }
-                            //}
                             for (int i = 0; i < endPoints.Length; i++)
                             {
-                                endPoints[i].transform.parent = _originalParent;
-                               
+                                endPoints[i].transform.parent = _originalParent;                               
                             }
                             for (int i = 0; i < toggles.Length; i++)
                             {                            
@@ -550,7 +531,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                             // Reduce turns in round remaining for all team members.                       
                             photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
                        }
-                        
+
+                        photonView.RPC("UpdateStartPoints", RpcTarget.All);
                     }
                 }
             }
@@ -641,13 +623,11 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
             stream.SendNext(transform.rotation);
         }
         else if (stream.IsReading)
-        {
-            //int numChildren = transform.childCount;
-
-            //for (int i = 0; i < numChildren; i++)
-            //{
-            //    transform.GetChild(i).parent = _originalParent;
-            //}
+        {     
+            for (int i = 0; i < endPoints.Length; i++)
+            {
+                endPoints[i].transform.parent = _originalParent;
+            }
 
             for (int i = 0; i < toggles.Length; i++)
             {
@@ -656,6 +636,18 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
             transform.rotation = (Quaternion)stream.ReceiveNext();
         }
+    }
+
+    [PunRPC]
+    void UpdateStartPoints()
+    {
+        // Find all owned start points -----------------        
+        yellowTeamStartPoints = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint");
+        blueTeamStartPoints = GameObject.FindGameObjectsWithTag("Blue Team StartPoint");
+        redTeamStartPoints = GameObject.FindGameObjectsWithTag("Red Team StartPoint");
+        purpleTeamStartPoints = GameObject.FindGameObjectsWithTag("Purple Team StartPoint");
+        orangeTeamStartPoints = GameObject.FindGameObjectsWithTag("Orange Team StartPoint");
+        greenTeamStartPoints = GameObject.FindGameObjectsWithTag("Green Team StartPoint");
     }
 
     [PunRPC]
