@@ -28,6 +28,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     List<GameObject[]> _teamStartPoints = new List<GameObject[]>();
     List<string> _startPointTagNames = new List<string>();
 
+    public bool isCheckToggles;
+
     [SerializeField]
     BoxCollider2D thisCollider;
 
@@ -61,307 +63,311 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         _originalParent = transform.parent;
 
         endPoints = GameObject.FindGameObjectsWithTag("EndPoint");
-        toggles = GameObject.FindGameObjectsWithTag("Toggle");    
+        toggles = GameObject.FindGameObjectsWithTag("Toggle");
+
+        // thisCollider = GetComponent<Collider2D>();
+        // 
        
-       // thisCollider = GetComponent<Collider2D>();       
     }
 
     void Update()
     {
-       
-
-        // Yellow ------------------------
-        // Check if bounds of this toggle are overlapping a yellow start point.
-        for (int i = 0; i < yellowTeamStartPoints.Length; i++)
+      //  Debug.Log(isCheckToggles);
+          if (isCheckToggles == true)
         {
-            if (thisCollider.bounds.Intersects(yellowTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
+            // Yellow ------------------------
+            // Check if bounds of this toggle are overlapping a yellow start point.
+            for (int i = 0; i < yellowTeamStartPoints.Length; i++)
             {
-                _sprite.color = _yellowTeamConnectedColor;
-                gameObject.transform.parent = yellowTeamStartPoints[i].transform;
-
-                // If so, exit the Update method.
-                return;
-            }
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
-
-        // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
-            {
-                // If that toggle in a descendant of the startpoint...
-                if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
+                if (thisCollider.bounds.Intersects(yellowTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
                 {
                     _sprite.color = _yellowTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+                    gameObject.transform.parent = yellowTeamStartPoints[i].transform;
 
                     // If so, exit the Update method.
                     return;
                 }
-                // if not...
                 else
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
-            // If they are not...
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Blue ------------------------
-        // Check if bounds of this toggle are overlapping a blue start point.
-        for (int i = 0; i < blueTeamStartPoints.Length; i++)
-        {
-            if (thisCollider.bounds.Intersects(blueTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
+            // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
+            for (int i = 0; i < toggles.Length; i++)
             {
-                _sprite.color = _blueTeamConnectedColor;
-                gameObject.transform.parent = blueTeamStartPoints[i].transform;
+                // If they are...
+                if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+                {
+                    // If that toggle in a descendant of the startpoint...
+                    if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
+                    {
+                        _sprite.color = _yellowTeamConnectedColor;
+                        gameObject.transform.parent = toggles[i].transform;
 
-                // If so, exit the Update method.
-                return;
+                        // If so, exit the Update method.
+                        return;
+                    }
+                    // if not...
+                    else
+                    {
+                        _sprite.color = _disconnectedColor;
+                        gameObject.transform.parent = _originalParent;
+                    }
+                }
+                // If they are not...
+                else
+                {
+                    _sprite.color = _disconnectedColor;
+                    gameObject.transform.parent = _originalParent;
+                }
             }
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+            // Blue ------------------------
+            // Check if bounds of this toggle are overlapping a blue start point.
+            for (int i = 0; i < blueTeamStartPoints.Length; i++)
             {
-                // If that toggle in a descendant of the startpoint...
-                if (toggles[i].transform.root.tag == "Blue Team StartPoint")
+                if (thisCollider.bounds.Intersects(blueTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
                 {
                     _sprite.color = _blueTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+                    gameObject.transform.parent = blueTeamStartPoints[i].transform;
 
                     // If so, exit the Update method.
                     return;
                 }
-                // if not...
                 else
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
-            // If they are not...
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Red ------------------------
-        // Check if bounds of this toggle are overlapping a red start point.
-        for (int i = 0; i < redTeamStartPoints.Length; i++)
-        {
-            if (thisCollider.bounds.Intersects(redTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
+            // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
+            for (int i = 0; i < toggles.Length; i++)
             {
-                _sprite.color = _redTeamConnectedColor;
-                gameObject.transform.parent = redTeamStartPoints[i].transform;
+                // If they are...
+                if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+                {
+                    // If that toggle in a descendant of the startpoint...
+                    if (toggles[i].transform.root.tag == "Blue Team StartPoint")
+                    {
+                        _sprite.color = _blueTeamConnectedColor;
+                        gameObject.transform.parent = toggles[i].transform;
 
-                // If so, exit the Update method.
-                return;
+                        // If so, exit the Update method.
+                        return;
+                    }
+                    // if not...
+                    else
+                    {
+                        _sprite.color = _disconnectedColor;
+                        gameObject.transform.parent = _originalParent;
+                    }
+                }
+                // If they are not...
+                else
+                {
+                    _sprite.color = _disconnectedColor;
+                    gameObject.transform.parent = _originalParent;
+                }
             }
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+            // Red ------------------------
+            // Check if bounds of this toggle are overlapping a red start point.
+            for (int i = 0; i < redTeamStartPoints.Length; i++)
             {
-                // If that toggle in a descendant of the startpoint...
-                if (toggles[i].transform.root.tag == "Red Team StartPoint")
+                if (thisCollider.bounds.Intersects(redTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
                 {
                     _sprite.color = _redTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+                    gameObject.transform.parent = redTeamStartPoints[i].transform;
 
                     // If so, exit the Update method.
                     return;
                 }
-                // if not...
                 else
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
-            // If they are not...
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Purple ------------------------
-        // Check if bounds of this toggle are overlapping a purple start point.
-        for (int i = 0; i < purpleTeamStartPoints.Length; i++)
-        {
-            if (thisCollider.bounds.Intersects(purpleTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
+            // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
+            for (int i = 0; i < toggles.Length; i++)
             {
-                _sprite.color = _purpleTeamConnectedColor;
-                gameObject.transform.parent = purpleTeamStartPoints[i].transform;
+                // If they are...
+                if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+                {
+                    // If that toggle in a descendant of the startpoint...
+                    if (toggles[i].transform.root.tag == "Red Team StartPoint")
+                    {
+                        _sprite.color = _redTeamConnectedColor;
+                        gameObject.transform.parent = toggles[i].transform;
 
-                // If so, exit the Update method.
-                return;
+                        // If so, exit the Update method.
+                        return;
+                    }
+                    // if not...
+                    else
+                    {
+                        _sprite.color = _disconnectedColor;
+                        gameObject.transform.parent = _originalParent;
+                    }
+                }
+                // If they are not...
+                else
+                {
+                    _sprite.color = _disconnectedColor;
+                    gameObject.transform.parent = _originalParent;
+                }
             }
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+            // Purple ------------------------
+            // Check if bounds of this toggle are overlapping a purple start point.
+            for (int i = 0; i < purpleTeamStartPoints.Length; i++)
             {
-                // If that toggle in a descendant of the startpoint...
-                if (toggles[i].transform.root.tag == "Purple Team StartPoint")
+                if (thisCollider.bounds.Intersects(purpleTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
                 {
                     _sprite.color = _purpleTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+                    gameObject.transform.parent = purpleTeamStartPoints[i].transform;
 
                     // If so, exit the Update method.
                     return;
                 }
-                // if not...
                 else
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
-            // If they are not...
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Orange ------------------------
-        // Check if bounds of this toggle are overlapping a purple start point.
-        for (int i = 0; i < orangeTeamStartPoints.Length; i++)
-        {
-            if (thisCollider.bounds.Intersects(orangeTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
+            // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
+            for (int i = 0; i < toggles.Length; i++)
             {
-                _sprite.color = _orangeTeamConnectedColor;
-                gameObject.transform.parent = orangeTeamStartPoints[i].transform;
+                // If they are...
+                if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+                {
+                    // If that toggle in a descendant of the startpoint...
+                    if (toggles[i].transform.root.tag == "Purple Team StartPoint")
+                    {
+                        _sprite.color = _purpleTeamConnectedColor;
+                        gameObject.transform.parent = toggles[i].transform;
 
-                // If so, exit the Update method.
-                return;
+                        // If so, exit the Update method.
+                        return;
+                    }
+                    // if not...
+                    else
+                    {
+                        _sprite.color = _disconnectedColor;
+                        gameObject.transform.parent = _originalParent;
+                    }
+                }
+                // If they are not...
+                else
+                {
+                    _sprite.color = _disconnectedColor;
+                    gameObject.transform.parent = _originalParent;
+                }
             }
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+            // Orange ------------------------
+            // Check if bounds of this toggle are overlapping a purple start point.
+            for (int i = 0; i < orangeTeamStartPoints.Length; i++)
             {
-                // If that toggle in a descendant of the startpoint...
-                if (toggles[i].transform.root.tag == "Orange Team StartPoint")
+                if (thisCollider.bounds.Intersects(orangeTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
                 {
                     _sprite.color = _orangeTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+                    gameObject.transform.parent = orangeTeamStartPoints[i].transform;
 
                     // If so, exit the Update method.
                     return;
                 }
-                // if not...
                 else
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
-            // If they are not...
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Green ------------------------
-        // Check if bounds of this toggle are overlapping a purple start point.
-        for (int i = 0; i < greenTeamStartPoints.Length; i++)
-        {
-            if (thisCollider.bounds.Intersects(greenTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
+            // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
+            for (int i = 0; i < toggles.Length; i++)
             {
-                _sprite.color = _greenTeamConnectedColor;
-                gameObject.transform.parent = greenTeamStartPoints[i].transform;
+                // If they are...
+                if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+                {
+                    // If that toggle in a descendant of the startpoint...
+                    if (toggles[i].transform.root.tag == "Orange Team StartPoint")
+                    {
+                        _sprite.color = _orangeTeamConnectedColor;
+                        gameObject.transform.parent = toggles[i].transform;
 
-                // If so, exit the Update method.
-                return;
+                        // If so, exit the Update method.
+                        return;
+                    }
+                    // if not...
+                    else
+                    {
+                        _sprite.color = _disconnectedColor;
+                        gameObject.transform.parent = _originalParent;
+                    }
+                }
+                // If they are not...
+                else
+                {
+                    _sprite.color = _disconnectedColor;
+                    gameObject.transform.parent = _originalParent;
+                }
             }
-            else
-            {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
-        }
 
-        // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            // If they are...
-            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+            // Green ------------------------
+            // Check if bounds of this toggle are overlapping a purple start point.
+            for (int i = 0; i < greenTeamStartPoints.Length; i++)
             {
-                // If that toggle in a descendant of the startpoint...
-                if (toggles[i].transform.root.tag == "Green Team StartPoint")
+                if (thisCollider.bounds.Intersects(greenTeamStartPoints[i].GetComponent<CircleCollider2D>().bounds))
                 {
                     _sprite.color = _greenTeamConnectedColor;
-                    gameObject.transform.parent = toggles[i].transform;
+                    gameObject.transform.parent = greenTeamStartPoints[i].transform;
 
                     // If so, exit the Update method.
                     return;
                 }
-                // if not...
                 else
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
-            // If they are not...
-            else
+
+            // Otherwise, check if bounds of this toggle are overlapping the bounds of any other toggle.       
+            for (int i = 0; i < toggles.Length; i++)
             {
-                _sprite.color = _disconnectedColor;
-                gameObject.transform.parent = _originalParent;
-            }
+                // If they are...
+                if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+                {
+                    // If that toggle in a descendant of the startpoint...
+                    if (toggles[i].transform.root.tag == "Green Team StartPoint")
+                    {
+                        _sprite.color = _greenTeamConnectedColor;
+                        gameObject.transform.parent = toggles[i].transform;
+
+                        // If so, exit the Update method.
+                        return;
+                    }
+                    // if not...
+                    else
+                    {
+                        _sprite.color = _disconnectedColor;
+                        gameObject.transform.parent = _originalParent;
+                    }
+                }
+                // If they are not...
+                else
+                {
+                    _sprite.color = _disconnectedColor;
+                    gameObject.transform.parent = _originalParent;
+                }
+            }           
         }
     }
 
@@ -380,6 +386,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     // Rotate toggle on mouse click.
                     if (Input.GetMouseButtonDown(0))
                     {
+                        photonView.RPC("UpdateTogglesRPC", RpcTarget.All);
+
                         bool isSteal = false;
 
                         if (_sprite.color != _disconnectedColor)
@@ -470,13 +478,36 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                             photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
                        }
 
-                        photonView.RPC("UpdateStartPoints", RpcTarget.All);
+                        photonView.RPC("UpdateStartPoints", RpcTarget.All);                        
                     }
                 }
             }
         }
     }
 
+
+    private IEnumerator UpdateToggles()
+    {
+        Debug.Log("UpdateTogglesCoroutine");
+
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            toggles[i].GetComponent<ToggleBehaviour>().isCheckToggles = true;
+        }
+
+        int h = 0;
+        while (h < 20)
+        {
+            Debug.Log(h);
+            h++;
+            yield return null;
+        }
+
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            toggles[i].GetComponent<ToggleBehaviour>().isCheckToggles = false;
+        }
+    }
 
     // For other clients.
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -511,6 +542,13 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         purpleTeamStartPoints = GameObject.FindGameObjectsWithTag("Purple Team StartPoint");
         orangeTeamStartPoints = GameObject.FindGameObjectsWithTag("Orange Team StartPoint");
         greenTeamStartPoints = GameObject.FindGameObjectsWithTag("Green Team StartPoint");
+    }
+
+    [PunRPC]
+    void UpdateTogglesRPC()
+    {
+        Debug.Log("UpdateToggles");       
+        StartCoroutine(UpdateToggles());
     }
 
     [PunRPC]
