@@ -28,36 +28,14 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     List<GameObject[]> _teamStartPoints = new List<GameObject[]>();
     List<string> _startPointTagNames = new List<string>();
 
-    public bool isCheckToggles;
+    public bool isCheckToggles;    
+    private GameManager gameManagerScript;
 
     [SerializeField]
     BoxCollider2D thisCollider;
 
     void Start()
-    {      
-         // Fill list of team colours.
-         //_teamColours.Add(_yellowTeamConnectedColor);
-         //_teamColours.Add(_blueTeamConnectedColor);
-         //_teamColours.Add(_redTeamConnectedColor);
-         //_teamColours.Add(_purpleTeamConnectedColor);
-         //_teamColours.Add(_orangeTeamConnectedColor);
-         //_teamColours.Add(_greenTeamConnectedColor);
-
-         // Fill list of team startpoints.
-         //_teamStartPoints.Add(yellowTeamStartPoints);
-         //_teamStartPoints.Add(blueTeamStartPoints);
-         //_teamStartPoints.Add(redTeamStartPoints);
-         //_teamStartPoints.Add(purpleTeamStartPoints);
-         //_teamStartPoints.Add(orangeTeamStartPoints);
-         //_teamStartPoints.Add(greenTeamStartPoints);
-
-         // Fill list of team startpoints tag names.
-         //_startPointTagNames.Add("Yellow Team StartPoint");
-         //_startPointTagNames.Add("Blue Team StartPoint");
-         //_startPointTagNames.Add("Red Team StartPoint");
-         //_startPointTagNames.Add("Purple Team StartPoint");
-         //_startPointTagNames.Add("Orange Team StartPoint");
-         //_startPointTagNames.Add("Green Team StartPoint");
+    {          
 
          _sprite = GetComponent<SpriteRenderer>();      
         _originalParent = transform.parent;
@@ -65,9 +43,9 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         endPoints = GameObject.FindGameObjectsWithTag("EndPoint");
         toggles = GameObject.FindGameObjectsWithTag("Toggle");
 
-        // thisCollider = GetComponent<Collider2D>();
-        // 
-       
+        GameObject gameManager = GameObject.Find("GameManager");
+        gameManagerScript = gameManager.GetComponent<GameManager>();
+        
     }
 
     void Update()
@@ -498,7 +476,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         int h = 0;
         while (h < 20)
         {
-            Debug.Log(h);
+          //  Debug.Log(h);
             h++;
             yield return null;
         }
@@ -507,6 +485,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         {
             toggles[i].GetComponent<ToggleBehaviour>().isCheckToggles = false;
         }
+
+        gameManagerScript.UpdateScore();
     }
 
     // For other clients.
