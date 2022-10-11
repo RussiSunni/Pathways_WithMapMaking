@@ -19,94 +19,75 @@ public class EndPointBehaviour : MonoBehaviour
     Collider2D thisCollider;
     public GameObject[] toggles;
 
-    public bool isConnectedToYellow;
-    public bool isConnectedToBlue;
-    public bool isConnectedToRed;
-    public bool isConnectedToPurple;
-    public bool isConnectedToOrange;
-    public bool isConnectedToGreen;
-
     void Start()
     {
-        _sprite = GetComponent<SpriteRenderer>();
-        _originalParent = transform.parent;
+        //_sprite = GetComponent<SpriteRenderer>();
+        //_originalParent = transform.parent;
 
-        // Find all toggles in the scene.
-        toggles = GameObject.FindGameObjectsWithTag("Toggle");
+        //// Find all toggles in the scene.
+        //toggles = GameObject.FindGameObjectsWithTag("Toggle");
 
-        // Get the collider for this endpoint.
-        thisCollider = GetComponent<Collider2D>();
+        //// Get the collider for this endpoint.
+        //thisCollider = GetComponent<Collider2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        StartCoroutine(ExecuteAfterTimeEnter(0.1f, collision));       
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    StartCoroutine(ExecuteAfterTimeEnter(0.1f, collision));       
+    //}
 
-    IEnumerator ExecuteAfterTimeEnter(float time, Collider2D collision)
-    {
-        yield return new WaitForSeconds(time);
+    //IEnumerator ExecuteAfterTimeEnter(float time, Collider2D collision)
+    //{
+    //    yield return new WaitForSeconds(time);
 
-        if (collision.transform.root.tag == "Yellow Team StartPoint")
-        {           
-            _sprite.color = _yellowTeamConnectedColor;
-            isConnectedToYellow = true;
-            gameObject.transform.parent = collision.transform;         
-        }
+    //    if (collision.transform.root.tag == "Yellow Team StartPoint")
+    //    {           
+    //        _sprite.color = _yellowTeamConnectedColor;           
+    //        gameObject.transform.parent = collision.transform.root;         
+    //    }
 
-        if (collision.transform.root.tag == "Blue Team StartPoint")
-        {
-            _sprite.color = _blueTeamConnectedColor;
-            isConnectedToBlue = true;
-            gameObject.transform.parent = collision.transform;
-        }
+    //    if (collision.transform.root.tag == "Blue Team StartPoint")
+    //    {
+    //        _sprite.color = _blueTeamConnectedColor;
+    //        gameObject.transform.parent = collision.transform.root;
+    //    }
 
-        if (collision.transform.root.tag == "Red Team StartPoint")
-        {
-            _sprite.color = _redTeamConnectedColor;
-            isConnectedToRed = true;
-            gameObject.transform.parent = collision.transform;
-        }
+    //    if (collision.transform.root.tag == "Red Team StartPoint")
+    //    {
+    //        _sprite.color = _redTeamConnectedColor;
+    //        gameObject.transform.parent = collision.transform.root;
+    //    }
 
-        if (collision.transform.root.tag == "Purple Team StartPoint")
-        {
-            _sprite.color = _purpleTeamConnectedColor;
-            isConnectedToPurple = true;
-            gameObject.transform.parent = collision.transform;
-        }
+    //    if (collision.transform.root.tag == "Purple Team StartPoint")
+    //    {
+    //        _sprite.color = _purpleTeamConnectedColor;
+    //        gameObject.transform.parent = collision.transform.root;
+    //    }
 
-        if (collision.transform.root.tag == "Orange Team StartPoint")
-        {
-            _sprite.color = _orangeTeamConnectedColor;
-            isConnectedToOrange = true;
-            gameObject.transform.parent = collision.transform;
-        }
+    //    if (collision.transform.root.tag == "Orange Team StartPoint")
+    //    {
+    //        _sprite.color = _orangeTeamConnectedColor;
+    //        gameObject.transform.parent = collision.transform.root;
+    //    }
 
-        if (collision.transform.root.tag == "Green Team StartPoint")
-        {
-            _sprite.color = _greenTeamConnectedColor;
-            isConnectedToGreen = true;
-            gameObject.transform.parent = collision.transform;
-        }
-    }
+    //    if (collision.transform.root.tag == "Green Team StartPoint")
+    //    {
+    //        _sprite.color = _greenTeamConnectedColor;
+    //        gameObject.transform.parent = collision.transform.root;
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {    
-        _sprite.color = _disconnectedColor;
-        gameObject.transform.parent = _originalParent;
-        StartCoroutine(ExecuteAfterTimeExit(0.1f, collision));
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{           
+    //    StartCoroutine(ExecuteAfterTimeExit(0.1f, collision));
+    //}
 
-    IEnumerator ExecuteAfterTimeExit(float time, Collider2D collision)
-    {
-        yield return new WaitForSeconds(time);
-        isConnectedToYellow = false;
-        isConnectedToBlue = false;
-        isConnectedToRed = false;
-        isConnectedToPurple = false;
-        isConnectedToOrange = false;
-        isConnectedToGreen = false;
-    }
+    //IEnumerator ExecuteAfterTimeExit(float time, Collider2D collision)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    _sprite.color = _disconnectedColor;
+    //    gameObject.transform.parent = _originalParent;
+    //}
 
     //private void Update()
     //{

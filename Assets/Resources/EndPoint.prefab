@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggles: []
-  isConnectedToYellow: 0
 --- !u!114 &635954119789312772
 MonoBehaviour:
   m_ObjectHideFlags: 0

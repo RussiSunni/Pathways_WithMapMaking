@@ -62,6 +62,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     _sprite.color = _yellowTeamConnectedColor;
                     gameObject.transform.parent = yellowTeamStartPoints[i].transform;
 
+                    EndPointCheck();
+
                     // If so, exit the Update method.
                     return;
                 }
@@ -84,6 +86,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         _sprite.color = _yellowTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
 
+                        EndPointCheck();
+
                         // If so, exit the Update method.
                         return;
                     }
@@ -92,6 +96,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     {
                         _sprite.color = _disconnectedColor;
                         gameObject.transform.parent = _originalParent;
+
+                        EndPointCheck();
                     }
                 }
                 // If they are not...
@@ -99,8 +105,10 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+                    
+                    EndPointCheck();
                 }
-            }
+            }            
 
             // Blue ------------------------
             // Check if bounds of this toggle are overlapping a blue start point.
@@ -344,6 +352,30 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+                }
+            }           
+        }
+    }
+
+    private void EndPointCheck()
+    {
+        // Now check the endpoints.
+        for (int i = 0; i < endPoints.Length; i++)
+        {
+           // Debug.Log("endpoint length: " + i);
+            if (thisCollider.bounds.Intersects(endPoints[i].GetComponent<BoxCollider2D>().bounds))
+            {
+               // Debug.Log("intersects with endpoint");
+                if (thisCollider.transform.root.tag == "Yellow Team StartPoint")
+                {
+                    Debug.Log("endpoint intersects with yellow");
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _yellowTeamConnectedColor;
+                    endPoints[i].transform.parent = thisCollider.transform;                  
+                }
+                else
+                {
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _disconnectedColor;
+                    endPoints[i].transform.parent = null;
                 }
             }           
         }
