@@ -20,6 +20,11 @@ public class EndPointBehaviour : MonoBehaviour
     public GameObject[] toggles;
 
     public bool isConnectedToYellow;
+    public bool isConnectedToBlue;
+    public bool isConnectedToRed;
+    public bool isConnectedToPurple;
+    public bool isConnectedToOrange;
+    public bool isConnectedToGreen;
 
     void Start()
     {
@@ -48,6 +53,41 @@ public class EndPointBehaviour : MonoBehaviour
             isConnectedToYellow = true;
             gameObject.transform.parent = collision.transform;         
         }
+
+        if (collision.transform.root.tag == "Blue Team StartPoint")
+        {
+            _sprite.color = _blueTeamConnectedColor;
+            isConnectedToBlue = true;
+            gameObject.transform.parent = collision.transform;
+        }
+
+        if (collision.transform.root.tag == "Red Team StartPoint")
+        {
+            _sprite.color = _redTeamConnectedColor;
+            isConnectedToRed = true;
+            gameObject.transform.parent = collision.transform;
+        }
+
+        if (collision.transform.root.tag == "Purple Team StartPoint")
+        {
+            _sprite.color = _purpleTeamConnectedColor;
+            isConnectedToPurple = true;
+            gameObject.transform.parent = collision.transform;
+        }
+
+        if (collision.transform.root.tag == "Orange Team StartPoint")
+        {
+            _sprite.color = _orangeTeamConnectedColor;
+            isConnectedToOrange = true;
+            gameObject.transform.parent = collision.transform;
+        }
+
+        if (collision.transform.root.tag == "Green Team StartPoint")
+        {
+            _sprite.color = _greenTeamConnectedColor;
+            isConnectedToGreen = true;
+            gameObject.transform.parent = collision.transform;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -60,7 +100,12 @@ public class EndPointBehaviour : MonoBehaviour
     IEnumerator ExecuteAfterTimeExit(float time, Collider2D collision)
     {
         yield return new WaitForSeconds(time);
-        isConnectedToYellow = false;     
+        isConnectedToYellow = false;
+        isConnectedToBlue = false;
+        isConnectedToRed = false;
+        isConnectedToPurple = false;
+        isConnectedToOrange = false;
+        isConnectedToGreen = false;
     }
 
     //private void Update()
