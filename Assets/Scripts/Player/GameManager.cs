@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviourPun
 {
     public Text TeamNameText;
     public Text PlayerNameText;
-    public Text RoundScoreText;
-    public Text TotalScoreText;
+   // public Text RoundScoreText;
+    public Text ScoreText;
     public Text _roundNumberText;
     public Text _movesRemainingText;
     public Text _timeRemainingText;
@@ -20,9 +20,9 @@ public class GameManager : MonoBehaviourPun
     [SerializeField]
     private CanvasGroup _infoPanelCanvasGroup;  
 
-    private int _totalScore = 0;
+    private int _score = 0;
     // private int _roundScore;
-    public static int RoundScore;
+  //  public static int RoundScore;
     private int _roundNumber = 1;
     public static int TotalNumberOfRounds;
     public static int MovesInRoundRemaining;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviourPun
     {
         _infoPanelCanvasGroup.alpha = 1;
         _isGameStarted = true;
-        TotalScoreText.text = _totalScore.ToString();     
+        ScoreText.text = _score.ToString();     
     }
 
     void Start()
@@ -105,155 +105,7 @@ public class GameManager : MonoBehaviourPun
     public void Update()
     {   
         if (_isGameStarted && !_isGameEnded)
-        {
-           // if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
-         //   {
-                //if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
-                //{
-                //    if (GameObject.FindGameObjectsWithTag("Yellow Team StartPoint").Length > 0)
-                //    {
-                //        Transform[] children = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                //        int numberOfToggles = 0;
-                //        int numberOfEndPoints = 0;
-                //        foreach (Transform child in children)
-                //        {
-                //            if (child.tag == "Toggle")
-                //            {
-                //                numberOfToggles++;
-                //            }
-                //            else if (child.tag == "EndPoint")
-                //            {
-                //                numberOfEndPoints++;
-                //            }
-                //        }               
-                //        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                //    }
-                //}
-               // else 
-                //if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
-                //{
-                //    if (GameObject.FindGameObjectsWithTag("Blue Team StartPoint").Length > 0)
-                //    {
-                //        Transform[] children = GameObject.FindGameObjectsWithTag("Blue Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                //        int numberOfToggles = 0;
-                //        int numberOfEndPoints = 0;
-                //        foreach (Transform child in children)
-                //        {
-                //            if (child.tag == "Toggle")
-                //            {
-                //                numberOfToggles++;
-                //            }
-                //            else if (child.tag == "EndPoint")
-                //            {
-                //                numberOfEndPoints++;
-                //            }
-                //        }
-                //        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                //    }
-                //}
-                //else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
-                //{
-                //    if (GameObject.FindGameObjectsWithTag("Red Team StartPoint").Length > 0)
-                //    {
-                //        Transform[] children = GameObject.FindGameObjectsWithTag("Red Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                //        int numberOfToggles = 0;
-                //        int numberOfEndPoints = 0;
-                //        foreach (Transform child in children)
-                //        {
-                //            if (child.tag == "Toggle")
-                //            {
-                //                numberOfToggles++;
-                //            }
-                //            else if (child.tag == "EndPoint")
-                //            {
-                //                numberOfEndPoints++;
-                //            }
-                //        }
-                //        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                //    }
-                //}
-                //else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
-                //{
-                //    if (GameObject.FindGameObjectsWithTag("Purple Team StartPoint").Length > 0)
-                //    {
-                //        Transform[] children = GameObject.FindGameObjectsWithTag("Purple Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                //        int numberOfToggles = 0;
-                //        int numberOfEndPoints = 0;
-                //        foreach (Transform child in children)
-                //        {
-                //            if (child.tag == "Toggle")
-                //            {
-                //                numberOfToggles++;
-                //            }
-                //            else if (child.tag == "EndPoint")
-                //            {
-                //                numberOfEndPoints++;
-                //            }
-                //        }
-                //        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                //    }
-                //}
-                //else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
-                //{
-                //    if (GameObject.FindGameObjectsWithTag("Orange Team StartPoint").Length > 0)
-                //    {
-                //        Transform[] children = GameObject.FindGameObjectsWithTag("Orange Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                //        int numberOfToggles = 0;
-                //        int numberOfEndPoints = 0;
-                //        foreach (Transform child in children)
-                //        {
-                //            if (child.tag == "Toggle")
-                //            {
-                //                numberOfToggles++;
-                //            }
-                //            else if (child.tag == "EndPoint")
-                //            {
-                //                numberOfEndPoints++;
-                //            }
-                //        }
-                //        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                //    }
-                //}
-                //else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
-                //{
-                //    if (GameObject.FindGameObjectsWithTag("Green Team StartPoint").Length > 0)
-                //    {
-                //        Transform[] children = GameObject.FindGameObjectsWithTag("Green Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                //        int numberOfToggles = 0;
-                //        int numberOfEndPoints = 0;
-                //        foreach (Transform child in children)
-                //        {
-                //            if (child.tag == "Toggle")
-                //            {
-                //                numberOfToggles++;
-                //            }
-                //            else if (child.tag == "EndPoint")
-                //            {
-                //                numberOfEndPoints++;
-                //            }
-                //        }
-                //        RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                //    }
-                //}
-           // }
-
-            //NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
-            //RoundScoreText.text = RoundScore.ToString();
-
-            // Moves remaining
-            //_movesRemainingText.text = MovesInRoundRemaining.ToString();
-            //if (MovesInRoundRemaining == 0)
-            //{
-            //    if (_roundNumber == TotalNumberOfRounds)
-            //    {
-            //        Debug.Log("End of game");
-            //        photonView.RPC("EndGame", RpcTarget.All);
-            //    }
-            //    else
-            //    {
-            //        photonView.RPC("NextRound", RpcTarget.All);
-            //    }
-            //}
+        {         
 
             // Time remaining
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -302,6 +154,9 @@ public class GameManager : MonoBehaviourPun
                     Transform[] children = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
                     int numberOfToggles = 0;
                     int numberOfEndPoints = 0;
+
+                  //  Debug.Log("children.Length: " + children.Length);
+
                     foreach (Transform child in children)
                     {
                         if (child.tag == "Toggle")
@@ -311,9 +166,13 @@ public class GameManager : MonoBehaviourPun
                         else if (child.tag == "EndPoint")
                         {
                             numberOfEndPoints++;
-                        }
+                        }                       
                     }
-                    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+
+                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+                    //  RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    
+                    Debug.Log("_totalScore: " + _score);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
@@ -334,7 +193,8 @@ public class GameManager : MonoBehaviourPun
                             numberOfEndPoints++;
                         }
                     }
-                    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    //RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
@@ -355,7 +215,8 @@ public class GameManager : MonoBehaviourPun
                             numberOfEndPoints++;
                         }
                     }
-                    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    //    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
@@ -376,7 +237,8 @@ public class GameManager : MonoBehaviourPun
                             numberOfEndPoints++;
                         }
                     }
-                    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    //  RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
@@ -397,7 +259,8 @@ public class GameManager : MonoBehaviourPun
                             numberOfEndPoints++;
                         }
                     }
-                    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    // RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
@@ -418,12 +281,15 @@ public class GameManager : MonoBehaviourPun
                             numberOfEndPoints++;
                         }
                     }
-                    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    //   RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
+                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
 
             NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
-            RoundScoreText.text = RoundScore.ToString();
+            //RoundScoreText.text = RoundScore.ToString();
+
+            ScoreText.text = _score.ToString();
 
             _movesRemainingText.text = MovesInRoundRemaining.ToString();
             if (MovesInRoundRemaining == 0)
@@ -458,12 +324,12 @@ public class GameManager : MonoBehaviourPun
             _roundNumber++;
             _roundNumberText.text = _roundNumber.ToString();
 
-            _totalScore = _totalScore + RoundScore;
-            TotalScoreText.text = _totalScore.ToString();
+          //  _totalScore = _totalScore + RoundScore;
+          //  TotalScoreText.text = _totalScore.ToString();
 
             // Reset the parameters for the next round.
-            RoundScore = 0;
-            RoundScoreText.text = RoundScore.ToString();
+          //  RoundScore = 0;
+         //   RoundScoreText.text = RoundScore.ToString();
             MovesInRoundRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MovesPerRound"];
             SecondsInRoundRemaining = (float)CreateAndJoinRooms.roomOptions.CustomRoomProperties["SecondsPerRound"];
         }
@@ -472,11 +338,11 @@ public class GameManager : MonoBehaviourPun
     [PunRPC]
     void EndGame()
     {
-        _totalScore = _totalScore + RoundScore;
-        TotalScoreText.text = _totalScore.ToString();
+      //  _totalScore = _totalScore + RoundScore;
+        ScoreText.text = _score.ToString();
 
-        RoundScore = 0;
-        RoundScoreText.text = RoundScore.ToString();
+     //   RoundScore = 0;
+     //   RoundScoreText.text = RoundScore.ToString();
 
         _isGameEnded = true;
     }
