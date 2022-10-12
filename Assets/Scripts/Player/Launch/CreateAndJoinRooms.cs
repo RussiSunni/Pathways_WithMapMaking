@@ -14,11 +14,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     // Make the room options a global variable.
     public static RoomOptions roomOptions = new RoomOptions();
 
-    public CanvasGroup createRoomCanvasGroup;
-    public CanvasGroup joinRoomCanvasGroup;
-    public Image joinRoomButtonImage;
+  //  public CanvasGroup createRoomCanvasGroup;
+    public CanvasGroup readyCanvasGroup;
+    public Image readyButtonImage;
     public CanvasGroup startGameCanvasGroup;
-    public CanvasGroup roomNotCreatedYetTextCanvasGroup;
+    //public CanvasGroup roomNotCreatedYetTextCanvasGroup;
     public CanvasGroup playerListHeadingTextCanvasGroup;
     public Text playerListText;
     List<string> playerList = new List<string>();
@@ -28,7 +28,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     // Room options for testing.
     int totalNumberOfRounds = 2;
-    int movesPerRound = 30;
+    int movesPerRound = 10;
     float secondsPerRound = 1000;
     int pointsPerToggle = 1;
     int pointsPerEndPoint = 50;
@@ -53,12 +53,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         {
             playerName = "tom";
             PhotonNetwork.LocalPlayer.JoinTeam(1);
-            mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "test6" + ".json");           
+            mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "flickerTest" + ".json");           
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";
-            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "test6" + ".json");
+            mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "flickerTest" + ".json");
             PhotonNetwork.LocalPlayer.JoinTeam(0);
         }
 
@@ -137,63 +137,74 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         // Only show the create room button for the teacher.
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
         {
-            createRoomCanvasGroup.alpha = 1;
-            createRoomCanvasGroup.interactable = true;
-            joinRoomCanvasGroup.alpha = 0;
-            joinRoomCanvasGroup.interactable = false;
+            //createRoomCanvasGroup.alpha = 1;
+            //createRoomCanvasGroup.interactable = true;
+            readyCanvasGroup.alpha = 0;
+            readyCanvasGroup.interactable = false;
             playerListHeadingTextCanvasGroup.alpha = 1;
             playerListText.GetComponent<CanvasGroup>().alpha = 1;
+            startGameCanvasGroup.alpha = 1;
+            startGameCanvasGroup.interactable = true;
         }
         else 
         {
-            createRoomCanvasGroup.alpha = 0;
-            createRoomCanvasGroup.interactable = false;
-            joinRoomCanvasGroup.alpha = 1;
-            joinRoomCanvasGroup.interactable = true;
+            //createRoomCanvasGroup.alpha = 0;
+            //createRoomCanvasGroup.interactable = false;
+            readyCanvasGroup.alpha = 1;
+            readyCanvasGroup.interactable = true;
             playerListHeadingTextCanvasGroup.alpha = 0;
             playerListText.GetComponent<CanvasGroup>().alpha = 0;
-        }
+            startGameCanvasGroup.alpha = 0;
+            startGameCanvasGroup.interactable = false;
+        }      
 
-        startGameCanvasGroup.alpha = 0;
-        startGameCanvasGroup.interactable = false;
+        TypedLobby typedLobby = new TypedLobby("Default", LobbyType.Default);
+        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, typedLobby);
     }
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(roomName, roomOptions);
-    }  
+       // PhotonNetwork.CreateRoom(roomName, roomOptions);
+    }
 
-    public void JoinRoom()
+    //public void JoinRoom()
+    //{
+    //    PhotonNetwork.JoinRoom(roomName);
+    //}
+
+    public void Ready()
     {
-        PhotonNetwork.JoinRoom(roomName);
+        readyButtonImage.color = Color.green;
+        photonView.RPC("ReadyNotificationRPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
+        readyCanvasGroup.interactable = false;
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        StartCoroutine(ExecuteAfterTime(2));
+      //  StartCoroutine(ExecuteAfterTime(2));
     }
 
-    IEnumerator ExecuteAfterTime(float time)
-    {
-        roomNotCreatedYetTextCanvasGroup.alpha = 1;
-        yield return new WaitForSeconds(time);
+    //IEnumerator ExecuteAfterTime(float time)
+    //{
+    //    roomNotCreatedYetTextCanvasGroup.alpha = 1;
+    //    yield return new WaitForSeconds(time);
 
-        roomNotCreatedYetTextCanvasGroup.alpha = 0;
-    }
+    //    roomNotCreatedYetTextCanvasGroup.alpha = 0;
+    //}
 
     public override void OnJoinedRoom()
     {     
-        photonView.RPC("ReadyNotificationRPC", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName);
+        //photonView.RPC("ReadyNotificationRPC", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName);
 
-        if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
-        {
-            startGameCanvasGroup.alpha = 1;
-            startGameCanvasGroup.interactable = true;
-        }
-        else
-        {
-            joinRoomButtonImage.color = Color.green;
-        }
+        //if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
+        //{
+        //    startGameCanvasGroup.alpha = 1;
+        //    startGameCanvasGroup.interactable = true;
+        //}
+        //else
+        //{
+        //  //  joinRoomButtonImage.color = Color.green;
+        //}
         base.OnJoinedRoom();       
     }
 
@@ -205,16 +216,19 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     [PunRPC]
     void ReadyNotificationRPC(string playerName)
-    {     
-        playerList.Add(playerName);
-        string playerListString = "";
-           
-        for (int i = 0; i < playerList.Count; i++)
+    {
+        if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
         {
-            playerListString = playerListString + System.Environment.NewLine + playerList[i];
+            playerList.Add(playerName);
+            string playerListString = "";
+
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                playerListString = playerListString + System.Environment.NewLine + playerList[i];
+            }
+
+            playerListText.text = playerListString;
         }
-          
-        playerListText.text = playerListString;       
     }
 
     [PunRPC]
@@ -233,7 +247,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     void Update()
     {
         // Time remaining
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
         {
             if (isCountDownStarted)
             {
