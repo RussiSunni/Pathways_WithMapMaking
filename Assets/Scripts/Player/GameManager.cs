@@ -40,6 +40,15 @@ public class GameManager : MonoBehaviourPun
     private Color _orangeTeamConnectedColor = new Color(1, 0.65f, 0, 1);
     private Color _greenTeamConnectedColor = new Color(0, 1, 0, 1);  
 
+    private GameObject[] yellowTeamStartpoints;
+    private GameObject[] blueTeamStartpoints;
+    private GameObject[] redTeamStartpoints;
+    private GameObject[] purpleTeamStartpoints;
+    private GameObject[] orangeTeamStartpoints;
+    private GameObject[] greenTeamStartpoints;
+    int numberOfToggles = 0;
+    int numberOfEndPoints = 0;
+
 
     private void Awake()
     {
@@ -149,149 +158,169 @@ public class GameManager : MonoBehaviourPun
         {
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
             {
-                if (GameObject.FindGameObjectsWithTag("Yellow Team StartPoint").Length > 0)
+                numberOfToggles = 0;
+                numberOfEndPoints = 0;
+
+                yellowTeamStartpoints = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint");
+                if (yellowTeamStartpoints.Length > 0)
                 {
-                    Transform[] children = GameObject.FindGameObjectsWithTag("Yellow Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                    int numberOfToggles = 0;
-                    int numberOfEndPoints = 0;
-
-                  //  Debug.Log("children.Length: " + children.Length);
-
-                    foreach (Transform child in children)
+                    for (int i = 0; i < yellowTeamStartpoints.Length; i++)
                     {
-                        if (child.tag == "Toggle")
+                        Transform[] children = yellowTeamStartpoints[i].transform.GetComponentsInChildren<Transform>();
+                       
+                        foreach (Transform child in children)
                         {
-                            numberOfToggles++;
+                            if (child.tag == "Toggle")
+                            {
+                                numberOfToggles++;
+                            }
+                            else if (child.tag == "EndPoint")
+                            {
+                                numberOfEndPoints++;
+                            }
                         }
-                        else if (child.tag == "EndPoint")
-                        {
-                            numberOfEndPoints++;
-                        }                       
-                    }
-
-                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
-                    //  RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                    
-                    Debug.Log("_totalScore: " + _score);
+                    }                 
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
             {
-                if (GameObject.FindGameObjectsWithTag("Blue Team StartPoint").Length > 0)
+                numberOfToggles = 0;
+                numberOfEndPoints = 0;
+
+                blueTeamStartpoints = GameObject.FindGameObjectsWithTag("Blue Team StartPoint");
+                if (blueTeamStartpoints.Length > 0)
                 {
-                    Transform[] children = GameObject.FindGameObjectsWithTag("Blue Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                    int numberOfToggles = 0;
-                    int numberOfEndPoints = 0;
-                    foreach (Transform child in children)
+                    for (int i = 0; i < blueTeamStartpoints.Length; i++)
                     {
-                        if (child.tag == "Toggle")
+                        Transform[] children = blueTeamStartpoints[i].transform.GetComponentsInChildren<Transform>();
+
+                        foreach (Transform child in children)
                         {
-                            numberOfToggles++;
-                        }
-                        else if (child.tag == "EndPoint")
-                        {
-                            numberOfEndPoints++;
+                            if (child.tag == "Toggle")
+                            {
+                                numberOfToggles++;
+                            }
+                            else if (child.tag == "EndPoint")
+                            {
+                                numberOfEndPoints++;
+                            }
                         }
                     }
-                    //RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
             {
-                if (GameObject.FindGameObjectsWithTag("Red Team StartPoint").Length > 0)
+                numberOfToggles = 0;
+                numberOfEndPoints = 0;
+
+                redTeamStartpoints = GameObject.FindGameObjectsWithTag("Red Team StartPoint");
+                if (redTeamStartpoints.Length > 0)
                 {
-                    Transform[] children = GameObject.FindGameObjectsWithTag("Red Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                    int numberOfToggles = 0;
-                    int numberOfEndPoints = 0;
-                    foreach (Transform child in children)
+                    for (int i = 0; i < redTeamStartpoints.Length; i++)
                     {
-                        if (child.tag == "Toggle")
+                        Transform[] children = redTeamStartpoints[i].transform.GetComponentsInChildren<Transform>();
+
+                        foreach (Transform child in children)
                         {
-                            numberOfToggles++;
-                        }
-                        else if (child.tag == "EndPoint")
-                        {
-                            numberOfEndPoints++;
+                            if (child.tag == "Toggle")
+                            {
+                                numberOfToggles++;
+                            }
+                            else if (child.tag == "EndPoint")
+                            {
+                                numberOfEndPoints++;
+                            }
                         }
                     }
-                    //    RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
             {
-                if (GameObject.FindGameObjectsWithTag("Purple Team StartPoint").Length > 0)
+                numberOfToggles = 0;
+                numberOfEndPoints = 0;
+
+                purpleTeamStartpoints = GameObject.FindGameObjectsWithTag("Purple Team StartPoint");
+                if (purpleTeamStartpoints.Length > 0)
                 {
-                    Transform[] children = GameObject.FindGameObjectsWithTag("Purple Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                    int numberOfToggles = 0;
-                    int numberOfEndPoints = 0;
-                    foreach (Transform child in children)
+                    for (int i = 0; i < purpleTeamStartpoints.Length; i++)
                     {
-                        if (child.tag == "Toggle")
+                        Transform[] children = purpleTeamStartpoints[i].transform.GetComponentsInChildren<Transform>();
+
+                        foreach (Transform child in children)
                         {
-                            numberOfToggles++;
-                        }
-                        else if (child.tag == "EndPoint")
-                        {
-                            numberOfEndPoints++;
+                            if (child.tag == "Toggle")
+                            {
+                                numberOfToggles++;
+                            }
+                            else if (child.tag == "EndPoint")
+                            {
+                                numberOfEndPoints++;
+                            }
                         }
                     }
-                    //  RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
             {
-                if (GameObject.FindGameObjectsWithTag("Orange Team StartPoint").Length > 0)
+                numberOfToggles = 0;
+                numberOfEndPoints = 0;
+
+                orangeTeamStartpoints = GameObject.FindGameObjectsWithTag("Orange Team StartPoint");
+                if (orangeTeamStartpoints.Length > 0)
                 {
-                    Transform[] children = GameObject.FindGameObjectsWithTag("Orange Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                    int numberOfToggles = 0;
-                    int numberOfEndPoints = 0;
-                    foreach (Transform child in children)
+                    for (int i = 0; i < orangeTeamStartpoints.Length; i++)
                     {
-                        if (child.tag == "Toggle")
+                        Transform[] children = orangeTeamStartpoints[i].transform.GetComponentsInChildren<Transform>();
+
+                        foreach (Transform child in children)
                         {
-                            numberOfToggles++;
-                        }
-                        else if (child.tag == "EndPoint")
-                        {
-                            numberOfEndPoints++;
+                            if (child.tag == "Toggle")
+                            {
+                                numberOfToggles++;
+                            }
+                            else if (child.tag == "EndPoint")
+                            {
+                                numberOfEndPoints++;
+                            }
                         }
                     }
-                    // RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
             {
-                if (GameObject.FindGameObjectsWithTag("Green Team StartPoint").Length > 0)
+                numberOfToggles = 0;
+                numberOfEndPoints = 0;
+
+                greenTeamStartpoints = GameObject.FindGameObjectsWithTag("Green Team StartPoint");
+                if (greenTeamStartpoints.Length > 0)
                 {
-                    Transform[] children = GameObject.FindGameObjectsWithTag("Green Team StartPoint")[0].transform.GetComponentsInChildren<Transform>();
-                    int numberOfToggles = 0;
-                    int numberOfEndPoints = 0;
-                    foreach (Transform child in children)
+                    for (int i = 0; i < greenTeamStartpoints.Length; i++)
                     {
-                        if (child.tag == "Toggle")
+                        Transform[] children = greenTeamStartpoints[i].transform.GetComponentsInChildren<Transform>();
+
+                        foreach (Transform child in children)
                         {
-                            numberOfToggles++;
-                        }
-                        else if (child.tag == "EndPoint")
-                        {
-                            numberOfEndPoints++;
+                            if (child.tag == "Toggle")
+                            {
+                                numberOfToggles++;
+                            }
+                            else if (child.tag == "EndPoint")
+                            {
+                                numberOfEndPoints++;
+                            }
                         }
                     }
-                    //   RoundScore = ((numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint)) - _totalScore;
-                    _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
                 }
             }
 
+            // Calculate the score.
+            _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
+
+            // Update the UI.
             NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
-            //RoundScoreText.text = RoundScore.ToString();
-
             ScoreText.text = _score.ToString();
-
             _movesRemainingText.text = MovesInRoundRemaining.ToString();
+
             if (MovesInRoundRemaining == 0)
             {
                 if (_roundNumber == TotalNumberOfRounds)
