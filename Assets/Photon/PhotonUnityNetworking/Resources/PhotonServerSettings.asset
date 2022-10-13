@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: za
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -54,6 +54,21 @@ MonoBehaviour:
   - InstantiateEndPoints
   - ShowReadyPlayers
   - RoomCreated
+  - ReadyNotification
+  - ReadyNotificationRPC
+  - StartGameRPC
+  - ShowReadyButtonRPC
+  - DecreaseTimeRemainingRPC
+  - UpdateStartPoints
+  - UpdateToggles
+  - UpdateToggle
+  - UpdateToggleRPCs
+  - UpdateTogglesRPCs
+  - UpdateTogglesRPC
+  - UpdateScoreRPC
+  - JoinRoomRPC
+  - CheckIfGameStartedRPC
+  - StartTimerRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
