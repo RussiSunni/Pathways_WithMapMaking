@@ -119,6 +119,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     _sprite.color = _blueTeamConnectedColor;
                     gameObject.transform.parent = blueTeamStartPoints[i].transform;
 
+                    EndPointCheck();
+
                     // If so, exit the Update method.
                     return;
                 }
@@ -141,6 +143,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         _sprite.color = _blueTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
 
+                        EndPointCheck();
+
                         // If so, exit the Update method.
                         return;
                     }
@@ -149,6 +153,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     {
                         _sprite.color = _disconnectedColor;
                         gameObject.transform.parent = _originalParent;
+
+                        EndPointCheck();
                     }
                 }
                 // If they are not...
@@ -156,6 +162,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+
+                    EndPointCheck();
                 }
             }
 
@@ -167,6 +175,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _redTeamConnectedColor;
                     gameObject.transform.parent = redTeamStartPoints[i].transform;
+
+                    EndPointCheck();
 
                     // If so, exit the Update method.
                     return;
@@ -190,6 +200,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         _sprite.color = _redTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
 
+                        EndPointCheck();
+
                         // If so, exit the Update method.
                         return;
                     }
@@ -198,6 +210,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     {
                         _sprite.color = _disconnectedColor;
                         gameObject.transform.parent = _originalParent;
+
+                        EndPointCheck();
                     }
                 }
                 // If they are not...
@@ -205,6 +219,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+
+                    EndPointCheck();
                 }
             }
 
@@ -216,6 +232,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _purpleTeamConnectedColor;
                     gameObject.transform.parent = purpleTeamStartPoints[i].transform;
+
+                    EndPointCheck();
 
                     // If so, exit the Update method.
                     return;
@@ -239,6 +257,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         _sprite.color = _purpleTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
 
+                        EndPointCheck();
+
                         // If so, exit the Update method.
                         return;
                     }
@@ -247,6 +267,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     {
                         _sprite.color = _disconnectedColor;
                         gameObject.transform.parent = _originalParent;
+
+                        EndPointCheck();
                     }
                 }
                 // If they are not...
@@ -254,6 +276,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+
+                    EndPointCheck();
                 }
             }
 
@@ -265,6 +289,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _orangeTeamConnectedColor;
                     gameObject.transform.parent = orangeTeamStartPoints[i].transform;
+
+                    EndPointCheck();
 
                     // If so, exit the Update method.
                     return;
@@ -288,6 +314,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         _sprite.color = _orangeTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
 
+                        EndPointCheck();
+
                         // If so, exit the Update method.
                         return;
                     }
@@ -296,6 +324,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     {
                         _sprite.color = _disconnectedColor;
                         gameObject.transform.parent = _originalParent;
+
+                        EndPointCheck();
                     }
                 }
                 // If they are not...
@@ -303,6 +333,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+
+                    EndPointCheck();
                 }
             }
 
@@ -314,6 +346,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _greenTeamConnectedColor;
                     gameObject.transform.parent = greenTeamStartPoints[i].transform;
+
+                    EndPointCheck();
 
                     // If so, exit the Update method.
                     return;
@@ -337,6 +371,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         _sprite.color = _greenTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
 
+                        EndPointCheck();
+
                         // If so, exit the Update method.
                         return;
                     }
@@ -345,6 +381,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     {
                         _sprite.color = _disconnectedColor;
                         gameObject.transform.parent = _originalParent;
+
+                        EndPointCheck();
                     }
                 }
                 // If they are not...
@@ -352,6 +390,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
+
+                    EndPointCheck();
                 }
             }           
         }
@@ -364,13 +404,36 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         {
            // Debug.Log("endpoint length: " + i);
             if (thisCollider.bounds.Intersects(endPoints[i].GetComponent<BoxCollider2D>().bounds))
-            {
-               // Debug.Log("intersects with endpoint");
+            {              
                 if (thisCollider.transform.root.tag == "Yellow Team StartPoint")
                 {
-                    Debug.Log("endpoint intersects with yellow");
                     endPoints[i].GetComponent<SpriteRenderer>().color = _yellowTeamConnectedColor;
                     endPoints[i].transform.parent = thisCollider.transform;                  
+                }
+                else if (thisCollider.transform.root.tag == "Red Team StartPoint")
+                {
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _redTeamConnectedColor;
+                    endPoints[i].transform.parent = thisCollider.transform;
+                }
+                else if (thisCollider.transform.root.tag == "Blue Team StartPoint")
+                {
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _blueTeamConnectedColor;
+                    endPoints[i].transform.parent = thisCollider.transform;
+                }
+                else if (thisCollider.transform.root.tag == "Purple Team StartPoint")
+                {
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _purpleTeamConnectedColor;
+                    endPoints[i].transform.parent = thisCollider.transform;
+                }
+                else if (thisCollider.transform.root.tag == "Orange Team StartPoint")
+                {
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _orangeTeamConnectedColor;
+                    endPoints[i].transform.parent = thisCollider.transform;
+                }
+                else if (thisCollider.transform.root.tag == "Green Team StartPoint")
+                {
+                    endPoints[i].GetComponent<SpriteRenderer>().color = _greenTeamConnectedColor;
+                    endPoints[i].transform.parent = thisCollider.transform;
                 }
                 else
                 {
