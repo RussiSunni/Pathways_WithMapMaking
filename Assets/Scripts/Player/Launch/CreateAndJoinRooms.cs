@@ -51,15 +51,15 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         // Get the JSON for the map, for the room options.
         if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
-            playerName = "tom";
-            PhotonNetwork.LocalPlayer.JoinTeam(1);
+            playerName = "Teacher";
+            PhotonNetwork.LocalPlayer.JoinTeam(0);
             mapJSON = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Maps/" + "flickerTest" + ".json");           
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             playerName = "sally";
             mapJSON = File.ReadAllText(Application.dataPath + "/Maps/" + "flickerTest" + ".json");
-            PhotonNetwork.LocalPlayer.JoinTeam(0);
+            PhotonNetwork.LocalPlayer.JoinTeam(3);
         }
 
         // --------------------
@@ -179,6 +179,19 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         readyCanvasGroup.interactable = false;
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (!readyCanvasGroup.interactable)
+        {
+            if (newPlayer.NickName == "Teacher")
+            {
+                photonView.RPC("ReadyNotificationRPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
+            }
+        }
+
+      // base.OnPlayerEnteredRoom();
+    }
+
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
       //  StartCoroutine(ExecuteAfterTime(2));
@@ -191,6 +204,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     //    roomNotCreatedYetTextCanvasGroup.alpha = 0;
     //}
+
+    
 
     public override void OnJoinedRoom()
     {     
