@@ -39,10 +39,8 @@ public class MapLoadManager : MonoBehaviour
     }
     public void LoadMap()
     {
-        //string json = File.ReadAllText(Application.dataPath + "/Maps/" + _mapName + ".json");       
-
-        string json = (string)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MapJSON"];
-
+        string json = (string)GameAndMapSettings.roomOptions.CustomRoomProperties["MapJSON"];
+      
         MapData data = JsonUtility.FromJson<MapData>(json);
 
         for (int i = 0; i < data.tiles.Count; i++)

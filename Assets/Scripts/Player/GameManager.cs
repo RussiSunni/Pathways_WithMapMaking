@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviourPun
     private CanvasGroup _infoPanelCanvasGroup;  
 
     private int _score = 0;
-    // private int _roundScore;
-  //  public static int RoundScore;
     private int _roundNumber = 1;
     public static int TotalNumberOfRounds;
     public static int MovesInRoundRemaining;
@@ -64,14 +62,14 @@ public class GameManager : MonoBehaviourPun
 
     void Start()
     {      
-        SceneManager.sceneLoaded += OnSceneLoaded;      
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        MovesInRoundRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MovesPerRound"];
-        SecondsInRoundRemaining = (float)CreateAndJoinRooms.roomOptions.CustomRoomProperties["SecondsPerRound"];
-        TotalNumberOfRounds = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["TotalNumberOfRounds"];
-        PointsPerToggle = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["PointsPerToggle"];
-        PointsPerEndpoint = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["PointsPerEndpoint"];
-        NumberOfStealsRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["TotalNumberOfSteals"];
+        MovesInRoundRemaining = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["MovesPerRound"];
+        SecondsInRoundRemaining = (float)GameAndMapSettings.roomOptions.CustomRoomProperties["SecondsPerRound"];
+        TotalNumberOfRounds = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["TotalNumberOfRounds"];
+        PointsPerToggle = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["PointsPerToggle"];
+        PointsPerEndpoint = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["PointsPerEndpoint"];
+        NumberOfStealsRemaining = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["TotalNumberOfSteals"];
 
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
         {
@@ -359,8 +357,8 @@ public class GameManager : MonoBehaviourPun
             // Reset the parameters for the next round.
           //  RoundScore = 0;
          //   RoundScoreText.text = RoundScore.ToString();
-            MovesInRoundRemaining = (int)CreateAndJoinRooms.roomOptions.CustomRoomProperties["MovesPerRound"];
-            SecondsInRoundRemaining = (float)CreateAndJoinRooms.roomOptions.CustomRoomProperties["SecondsPerRound"];
+            MovesInRoundRemaining = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["MovesPerRound"];
+            SecondsInRoundRemaining = (float)GameAndMapSettings.roomOptions.CustomRoomProperties["SecondsPerRound"];
         }
     }
 
