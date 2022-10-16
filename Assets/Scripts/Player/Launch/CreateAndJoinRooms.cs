@@ -18,7 +18,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public Text playerListText;
     List<string> playerList = new List<string>();
 
-    string roomName;
+    public CanvasGroup roomNotReadyYetTextCanvasGroup;
+    public Text roomNameText;
 
     // Countdown timer.
     bool isCountDownStarted;
@@ -27,10 +28,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     bool isLoadLevelCalled;
 
     private void Start()
-    {
-        // For testing only -------------
-        roomName = "test room";   
-
+    {  
         // Only show the create room button for the teacher.
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Teacher")
         {
@@ -42,6 +40,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             playerListText.GetComponent<CanvasGroup>().alpha = 1;
             startGameCanvasGroup.alpha = 1;
             startGameCanvasGroup.interactable = true;
+
+            PhotonNetwork.CreateRoom(GameAndMapSettings.roomName, GameAndMapSettings.roomOptions);
         }
         else 
         {
@@ -55,15 +55,41 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             startGameCanvasGroup.interactable = false;
         }      
 
-        TypedLobby typedLobby = new TypedLobby("Default", LobbyType.Default);
-        PhotonNetwork.JoinOrCreateRoom(roomName, GameAndMapSettings.roomOptions, typedLobby);
-    }  
+        //PhotonNetwork.JoinOrCreateRoom(roomName, GameAndMapSettings.roomOptions, TypedLobby.Default);
+    }
+
+    public override void OnCreatedRoom()
+    {        
+        roomNameText.text = "Room: " + PhotonNetwork.CurrentRoom.Name;
+    }
 
     public void Ready()
     {
+        PhotonNetwork.JoinRoom(GameAndMapSettings.roomName);    
+    }
+
+    public override void OnJoinedRoom()
+    {
+        roomNameText.text = "Room: " + PhotonNetwork.CurrentRoom.Name;
+
         readyButtonImage.color = Color.green;
         photonView.RPC("ReadyNotificationRPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
         readyCanvasGroup.interactable = false;
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Joining room failed.");
+        Debug.Log(message);
+
+        roomNotReadyYetTextCanvasGroup.alpha = 1;
+        StartCoroutine(ExecuteAfterTime());
+    }
+
+    IEnumerator ExecuteAfterTime()
+    {
+        yield return new WaitForSeconds(2);
+        roomNotReadyYetTextCanvasGroup.alpha = 0;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -74,16 +100,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             {
                 photonView.RPC("ReadyNotificationRPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
             }
-        }
-
-      // base.OnPlayerEnteredRoom();
-    }
-
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-      //  StartCoroutine(ExecuteAfterTime(2));
-    }
-
+        }     
+    }  
 
     public void StartGame()
     {
