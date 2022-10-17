@@ -17,6 +17,7 @@ public class GameAndMapSettings : MonoBehaviour
     private string playerName;
     private string gameId;
     public static string roomName;
+    private string urlBeginning;
 
     void Start()
     {
@@ -33,21 +34,24 @@ public class GameAndMapSettings : MonoBehaviour
             team = HttpUtility.ParseQueryString(uri.Query).Get("team");
             gameId = HttpUtility.ParseQueryString(uri.Query).Get("game_id");
             roomName = HttpUtility.ParseQueryString(uri.Query).Get("room_name");
+
+            urlBeginning = urlProtocolHostPort;
         }
-        else         
-        if (Application.platform == RuntimePlatform.WindowsPlayer)
+        else
         {
             roomName = "RoomC1G1RoomTHASD";
             gameId = "82";
-            playerName = "Teacher";
-            team = "Teacher";
-        }
-        else if (Application.platform == RuntimePlatform.WindowsEditor)
-        {
-            roomName = "RoomC1G1RoomTHASD";
-            gameId = "82";
-            playerName = "testPlayer";
-            team = "Yellow";
+            urlBeginning = "localhost:3000";
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            {         
+                playerName = "Teacher";
+                team = "Teacher";
+            }
+            else if (Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                playerName = "testPlayer";
+                team = "Yellow";
+            }
         }
 
 
@@ -86,8 +90,7 @@ public class GameAndMapSettings : MonoBehaviour
 
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
         // get id from the URL
-        StartCoroutine(GetGameSettingsRequest(urlProtocolHostPort + "/games/" + gameId));
-      //  StartCoroutine(GetGameSettingsRequest("localhost:3000" + "/games/" + gameId));
+        StartCoroutine(GetGameSettingsRequest(urlBeginning + "/games/" + gameId));
     }
 
     IEnumerator GetGameSettingsRequest(string uri)
@@ -115,8 +118,7 @@ public class GameAndMapSettings : MonoBehaviour
                     GameSettings gameSettings = GameSettings.CreateFromJSON(webRequest.downloadHandler.text);
                   //  Debug.Log(gameSettings.map_id);
 
-                    StartCoroutine(GetMapSettingsRequest(urlProtocolHostPort + "/maps/show/" + gameSettings.map_id));
-                    // StartCoroutine(GetMapSettingsRequest("localhost:3000" + "/maps/show/" + gameSettings.map_id));
+                     StartCoroutine(GetMapSettingsRequest(urlBeginning + "/maps/show/" + gameSettings.map_id));
                    
                     roomOptions.CustomRoomProperties.Add("MovesPerRound", gameSettings.number_moves);
                     roomOptions.CustomRoomProperties.Add("SecondsPerRound", gameSettings.number_seconds);
