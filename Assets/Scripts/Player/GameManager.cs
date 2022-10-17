@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviourPun
     public static int PointsPerEndpoint;
     public static int NumberOfStealsRemaining;
     private bool _isGameStarted = false;
-    private bool _isGameEnded;
+    public static bool IsGameEnded;
 
     private Color _yellowTeamConnectedColor = new Color(1, 1, 0, 1);
     private Color _blueTeamConnectedColor = new Color(0, 0, 1, 1);
@@ -113,9 +113,8 @@ public class GameManager : MonoBehaviourPun
 
     public void Update()
     {   
-        if (_isGameStarted && !_isGameEnded)
+        if (_isGameStarted && !IsGameEnded)
         {         
-
             // Time remaining
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
@@ -143,7 +142,7 @@ public class GameManager : MonoBehaviourPun
 
     public void UpdateScore()
     {
-        if (_isGameStarted && !_isGameEnded)
+        if (_isGameStarted && !IsGameEnded)
         { 
             photonView.RPC("UpdateScoreRPC", RpcTarget.All);
         }
@@ -370,10 +369,10 @@ public class GameManager : MonoBehaviourPun
       //  _totalScore = _totalScore + RoundScore;
         ScoreText.text = _score.ToString();
 
-     //   RoundScore = 0;
-     //   RoundScoreText.text = RoundScore.ToString();
+        //   RoundScore = 0;
+        //   RoundScoreText.text = RoundScore.ToString();
 
-        _isGameEnded = true;
+        IsGameEnded = true;
         _gameCompletePanelCanvasGroup.alpha = 1;
     }
 }

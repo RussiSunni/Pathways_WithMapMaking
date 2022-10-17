@@ -444,9 +444,9 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         }
     }
 
-    private void OnMouseOver()
+    private void OnMouseOver() 
     {
-        if (GameManager.MovesInRoundRemaining > 0 && GameManager.SecondsInRoundRemaining > 0)
+        if (!GameManager.IsGameEnded)
         {
             // Check if the teacher.
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
