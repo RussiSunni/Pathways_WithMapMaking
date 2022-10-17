@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviourPun
     public Text NumberOfStealsRemainingText;
 
     [SerializeField]
-    private CanvasGroup _infoPanelCanvasGroup;  
+    private CanvasGroup _infoPanelCanvasGroup;
+    [SerializeField]
+    private CanvasGroup _gameCompletePanelCanvasGroup;
 
     private int _score = 0;
     private int _roundNumber = 1;
@@ -372,5 +374,6 @@ public class GameManager : MonoBehaviourPun
      //   RoundScoreText.text = RoundScore.ToString();
 
         _isGameEnded = true;
+        _gameCompletePanelCanvasGroup.alpha = 1;
     }
 }
