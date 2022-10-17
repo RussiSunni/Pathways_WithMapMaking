@@ -32,8 +32,8 @@ public class StartPointBehaviour : MonoBehaviourPun
                     base.photonView.RequestOwnership();
 
                     // Check if the player has ownership of this object. If they dont, they cant move it.        
-                    if (photonView.IsMine)
-                    {
+              //      if (photonView.IsMine)
+              //      {
                         if (Input.GetMouseButtonDown(0))
                         {                     
                             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
@@ -71,7 +71,7 @@ public class StartPointBehaviour : MonoBehaviourPun
                             // Reduce turns in round remaining for all team members.                       
                             photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
                         }
-                    }
+                  //  }
                 }
             }
         }

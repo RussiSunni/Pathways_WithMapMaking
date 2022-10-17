@@ -454,8 +454,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 base.photonView.RequestOwnership();
 
                 // Check if the player has ownership of this object. If they dont, they cant move it.        
-                if (photonView.IsMine)
-                {
+             //   if (photonView.IsMine)
+             //   {
                     // Rotate toggle on mouse click.
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -553,7 +553,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
                         photonView.RPC("UpdateStartPoints", RpcTarget.All);                        
                     }
-                }
+              //  }
             }
         }
     }
@@ -561,8 +561,6 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
     private IEnumerator UpdateToggles()
     {
-        Debug.Log("UpdateTogglesCoroutine");
-
         for (int i = 0; i < toggles.Length; i++)
         {
             toggles[i].GetComponent<ToggleBehaviour>().isCheckToggles = true;
@@ -622,7 +620,6 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     [PunRPC]
     void UpdateTogglesRPC()
     {
-        Debug.Log("UpdateToggles");       
         StartCoroutine(UpdateToggles());
     }
 
