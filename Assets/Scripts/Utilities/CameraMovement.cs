@@ -12,16 +12,18 @@ public class CameraMovement : MonoBehaviour
     private void Update()
     {
         PanCamera();
+
+      //  Debug.Log(Input.GetTouch(0).position);
     }
 
     private void PanCamera()
     {
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(0))
         {
             dragOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
         }
-
-        if (Input.GetMouseButton(2))
+       
+        if (Input.GetMouseButton(0))
         {
             Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(Input.mousePosition);
 
