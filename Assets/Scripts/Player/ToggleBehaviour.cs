@@ -36,7 +36,6 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
     void Start()
     {          
-
          _sprite = GetComponent<SpriteRenderer>();      
         _originalParent = transform.parent;
 
@@ -319,110 +318,117 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         if (!GameManager.IsGameEnded)
         {
             // Check if the teacher.
-          if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
+            if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
             {
                 base.photonView.RequestOwnership();
 
-                // Check if the player has ownership of this object. If they dont, they cant move it.        
-             //   if (photonView.IsMine)
-             //   {
-                    // Rotate toggle on mouse click.
-                    if (Input.GetMouseButtonDown(0))
+                // Rotate toggle on mouse click.
+                if (Input.GetMouseButtonDown(0))
+                {
+                    //photonView.RPC("UpdateTogglesRPC", RpcTarget.All);
+
+                    bool isSteal = false;
+
+                    if (_sprite.color != _disconnectedColor)
                     {
-                        photonView.RPC("UpdateTogglesRPC", RpcTarget.All);
-
-                        bool isSteal = false;
-
-                        if (_sprite.color != _disconnectedColor)
+                        if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
                         {
-                            if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
+                            if (_sprite.color != _yellowTeamConnectedColor)
                             {
-                                if (_sprite.color != _yellowTeamConnectedColor)
+                                isSteal = true;
+                                if (GameManager.NumberOfStealsRemaining > 0)
                                 {
-                                    isSteal = true;
-                                    if (GameManager.NumberOfStealsRemaining > 0)
-                                    {
-                                        GameManager.NumberOfStealsRemaining--;
-                                    }
-                                }
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
-                            {
-                                if (_sprite.color != _blueTeamConnectedColor)
-                                {
-                                    isSteal = true;
-                                    if (GameManager.NumberOfStealsRemaining > 0)
-                                    {
-                                        GameManager.NumberOfStealsRemaining--;
-                                    }
-                                }
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
-                            {
-                                if (_sprite.color != _redTeamConnectedColor)
-                                {
-                                    isSteal = true;
-                                    if (GameManager.NumberOfStealsRemaining > 0)
-                                    {
-                                        GameManager.NumberOfStealsRemaining--;                                        
-                                    }
-                                }
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
-                            {
-                                if (_sprite.color != _purpleTeamConnectedColor)
-                                {
-                                    isSteal = true;
-                                    if (GameManager.NumberOfStealsRemaining > 0)
-                                    {
-                                        GameManager.NumberOfStealsRemaining--;                                        
-                                    }
-                                }
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
-                            {
-                                if (_sprite.color != _orangeTeamConnectedColor)
-                                {
-                                    isSteal = true;
-                                    if (GameManager.NumberOfStealsRemaining > 0)
-                                    {
-                                        GameManager.NumberOfStealsRemaining--;                                        
-                                    }
-                                }
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
-                            {
-                                if (_sprite.color != _greenTeamConnectedColor)
-                                {
-                                    isSteal = true;
-                                    if (GameManager.NumberOfStealsRemaining > 0)
-                                    {
-                                        GameManager.NumberOfStealsRemaining--;                                        
-                                    }
+                                    GameManager.NumberOfStealsRemaining--;
                                 }
                             }
                         }
-
-                        if (!isSteal || GameManager.NumberOfStealsRemaining > 0)
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
                         {
-                            for (int i = 0; i < endPoints.Length; i++)
+                            if (_sprite.color != _blueTeamConnectedColor)
                             {
-                                endPoints[i].transform.parent = _originalParent;                               
+                                isSteal = true;
+                                if (GameManager.NumberOfStealsRemaining > 0)
+                                {
+                                    GameManager.NumberOfStealsRemaining--;
+                                }
                             }
-                            for (int i = 0; i < toggles.Length; i++)
-                            {                            
-                                toggles[i].transform.parent = _originalParent;                                  
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
+                        {
+                            if (_sprite.color != _redTeamConnectedColor)
+                            {
+                                isSteal = true;
+                                if (GameManager.NumberOfStealsRemaining > 0)
+                                {
+                                    GameManager.NumberOfStealsRemaining--;                                        
+                                }
                             }
-
-
-                            transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);                            
-
-                            // Reduce turns in round remaining for all team members.                       
-                            photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
-                       }
-
-                        photonView.RPC("UpdateStartPoints", RpcTarget.All);                        
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
+                        {
+                            if (_sprite.color != _purpleTeamConnectedColor)
+                            {
+                                isSteal = true;
+                                if (GameManager.NumberOfStealsRemaining > 0)
+                                {
+                                    GameManager.NumberOfStealsRemaining--;                                        
+                                }
+                            }
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
+                        {
+                            if (_sprite.color != _orangeTeamConnectedColor)
+                            {
+                                isSteal = true;
+                                if (GameManager.NumberOfStealsRemaining > 0)
+                                {
+                                    GameManager.NumberOfStealsRemaining--;                                        
+                                }
+                            }
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
+                        {
+                            if (_sprite.color != _greenTeamConnectedColor)
+                            {
+                                isSteal = true;
+                                if (GameManager.NumberOfStealsRemaining > 0)
+                                {
+                                    GameManager.NumberOfStealsRemaining--;                                        
+                                }
+                            }
+                        }
                     }
+
+                    if (!isSteal || GameManager.NumberOfStealsRemaining > 0)
+                    {
+                        for (int i = 0; i < endPoints.Length; i++)
+                        {
+                            endPoints[i].transform.parent = null;                               
+                        }
+                        for (int i = 0; i < toggles.Length; i++)
+                        {
+                            Bounds otherToggleBounds = toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds;
+
+                            if (thisCollider.bounds.Intersects(otherToggleBounds))
+                                {
+                                // Check if this other toggle is also touching another connected toggle   
+                            
+                                    // this is causing the flickering !
+                                    // could be optimized by only going through toggles connecting to this one
+                                    toggles[i].transform.parent = null;                                    
+                                }                           
+                        }
+                                                    
+
+                        transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);
+                        photonView.RPC("UpdateTogglesRPC", RpcTarget.All);
+
+                    // Reduce turns in round remaining for all team members.                       
+                        photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
+                    }
+
+                    photonView.RPC("UpdateStartPoints", RpcTarget.All);                        
+                }
               //  }
             }
         }
@@ -463,13 +469,22 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         {     
             for (int i = 0; i < endPoints.Length; i++)
             {
-                endPoints[i].transform.parent = _originalParent;
+                endPoints[i].transform.parent = null;
             }
 
             for (int i = 0; i < toggles.Length; i++)
-            {
-                // otherwise toggles move with parent when turned.
-                toggles[i].transform.parent = _originalParent;
+            {         
+                Bounds otherToggleBounds = toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds;
+
+                if (thisCollider.bounds.Intersects(otherToggleBounds))
+                {
+                    // Check if this other toggle is also touching another connected toggle   
+
+                    // this is causing the flickering !
+                    // could be optimized by only going through toggles connecting to this one
+                    toggles[i].transform.parent = null;
+                }
+                
             }
 
             transform.rotation = (Quaternion)stream.ReceiveNext();
