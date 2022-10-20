@@ -179,13 +179,13 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 // If they are...
                 if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
                 {
-                     if (toggles[i].transform.parent == null)
-                    {
-                        _sprite.color = _disconnectedColor;
-                        gameObject.transform.parent = _originalParent;
-                    }
+                    // if (toggles[i].transform.parent == null)
+                    //{
+                    //    _sprite.color = _disconnectedColor;
+                    //    gameObject.transform.parent = _originalParent;
+                    //}
                     // If that toggle in a descendant of the startpoint...
-                    else if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
+                    if (toggles[i].transform.root.tag == "Yellow Team StartPoint")
                     {
                         _sprite.color = _yellowTeamConnectedColor;
                         gameObject.transform.parent = toggles[i].transform;
@@ -227,7 +227,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
                         // If so, exit the Update method.
                         return;
-                    }   // If that toggle in a descendant of the startpoint...
+                    }   
+                     // If that toggle in a descendant of the startpoint...
                     else if (toggles[i].transform.root.tag == "Orange Team StartPoint")
                     {
                         _sprite.color = _orangeTeamConnectedColor;
@@ -259,10 +260,14 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 // If they are not...
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+                   // _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;                 
                  }
             }                          
+        }
+        else if (transform.parent == null)
+        {
+            _sprite.color = _disconnectedColor;
         }
     }
 
@@ -417,8 +422,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                                 }                           
                         }
 
-                        // could use DetachChildren(), then reparent the boxCollider
-                                                    
+                        // could use DetachChildren(), then reparent the boxCollider                                                    
 
                         transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);
                         photonView.RPC("UpdateTogglesRPC", RpcTarget.All);
