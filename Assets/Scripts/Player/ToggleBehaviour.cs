@@ -68,7 +68,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+                 //   _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
@@ -88,7 +88,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+                 //   _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
@@ -108,7 +108,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+              //      _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
@@ -128,7 +128,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+              //      _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
@@ -148,7 +148,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+             //       _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
@@ -168,7 +168,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    _sprite.color = _disconnectedColor;
+               //     _sprite.color = _disconnectedColor;
                     gameObject.transform.parent = _originalParent;
                 }
             }
@@ -325,8 +325,6 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 // Rotate toggle on mouse click.
                 if (Input.GetMouseButtonDown(0))
                 {
-                    //photonView.RPC("UpdateTogglesRPC", RpcTarget.All);
-
                     bool isSteal = false;
 
                     if (_sprite.color != _disconnectedColor)
@@ -418,6 +416,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                                     toggles[i].transform.parent = null;                                    
                                 }                           
                         }
+
+                        // could use DetachChildren(), then reparent the boxCollider
                                                     
 
                         transform.eulerAngles = Vector3.forward * (transform.eulerAngles.z - 90);
