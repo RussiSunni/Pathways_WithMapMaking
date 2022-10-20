@@ -413,13 +413,13 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                             Bounds otherToggleBounds = toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds;
 
                             if (thisCollider.bounds.Intersects(otherToggleBounds))
-                                {
+                            {
                                 // Check if this other toggle is also touching another connected toggle   
                             
-                                    // this is causing the flickering !
-                                    // could be optimized by only going through toggles connecting to this one
-                                    toggles[i].transform.parent = null;                                    
-                                }                           
+                                // this is causing the flickering !
+                                // could be optimized by only going through toggles connecting to this one
+                                toggles[i].transform.parent = null;                                    
+                            }                           
                         }
 
                         // could use DetachChildren(), then reparent the boxCollider                                                    
@@ -487,7 +487,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     // this is causing the flickering !
                     // could be optimized by only going through toggles connecting to this one
                     toggles[i].transform.parent = null;
-                }
+                }    
                 
             }
 
