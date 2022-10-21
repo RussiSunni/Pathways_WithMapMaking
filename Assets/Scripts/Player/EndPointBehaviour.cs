@@ -21,7 +21,7 @@ public class EndPointBehaviour : MonoBehaviour
 
     void Start()
     {
-        //_sprite = GetComponent<SpriteRenderer>();
+        _sprite = GetComponent<SpriteRenderer>();
         //_originalParent = transform.parent;
 
         //// Find all toggles in the scene.
@@ -29,6 +29,12 @@ public class EndPointBehaviour : MonoBehaviour
 
         //// Get the collider for this endpoint.
         //thisCollider = GetComponent<Collider2D>();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        transform.parent = null;
+        _sprite.color = _disconnectedColor;
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)
