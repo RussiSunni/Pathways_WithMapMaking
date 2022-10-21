@@ -15,10 +15,12 @@ public class StartPointBehaviour : MonoBehaviourPun
     private Color _greenTeamConnectedColor = new Color(0, 1, 0, 1);
     private Color _disconnectedColor = new Color(1, 1, 1, 1); 
     private bool isOwnedByTeam = false;
+    public GameObject[] toggles;
 
     void Start()
     {
-        _sprite = GetComponent<SpriteRenderer>();       
+        _sprite = GetComponent<SpriteRenderer>();
+        toggles = GameObject.FindGameObjectsWithTag("Toggle");
     }
     private void OnMouseOver()
     {
@@ -31,51 +33,51 @@ public class StartPointBehaviour : MonoBehaviourPun
                 {
                     base.photonView.RequestOwnership();
 
-                    // Check if the player has ownership of this object. If they dont, they cant move it.        
-              //      if (photonView.IsMine)
-              //      {
-                        if (Input.GetMouseButtonDown(0))
-                        {                     
-                            if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
-                            {
-                                photonView.RPC("ChangeColour", RpcTarget.All, "Yellow Team");
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
-                            {
-                                photonView.RPC("ChangeColour", RpcTarget.All, "Blue Team");
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
-                            {
-                                photonView.RPC("ChangeColour", RpcTarget.All, "Red Team");
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
-                            {
-                                photonView.RPC("ChangeColour", RpcTarget.All, "Purple Team");
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
-                            {
-                                photonView.RPC("ChangeColour", RpcTarget.All, "Orange Team");
-                            }
-                            else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
-                            {
-                                photonView.RPC("ChangeColour", RpcTarget.All, "Green Team");
-                            }
-                            else
-                            {
-                                Debug.Log("Team not known");
-                            }
-
-                            // So it can only be claimed once.
-                            isOwnedByTeam = true;
-
-                            // Reduce turns in round remaining for all team members.                       
-                            photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
+                    if (Input.GetMouseButtonDown(0))
+                    {                     
+                        if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
+                        {
+                            photonView.RPC("ChangeColour", RpcTarget.All, "Yellow Team");
                         }
-                  //  }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Blue")
+                        {
+                            photonView.RPC("ChangeColour", RpcTarget.All, "Blue Team");
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Red")
+                        {
+                            photonView.RPC("ChangeColour", RpcTarget.All, "Red Team");
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Purple")
+                        {
+                            photonView.RPC("ChangeColour", RpcTarget.All, "Purple Team");
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Orange")
+                        {
+                            photonView.RPC("ChangeColour", RpcTarget.All, "Orange Team");
+                        }
+                        else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Green")
+                        {
+                            photonView.RPC("ChangeColour", RpcTarget.All, "Green Team");
+                        }
+                        else
+                        {
+                            Debug.Log("Team not known");
+                        }
+
+                        // So it can only be claimed once.
+                        isOwnedByTeam = true;
+
+                        // Reduce turns in round remaining for all team members.                       
+                        photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
+
+                        // Update the toggles.
+                        toggles[0].GetComponent<ToggleBehaviour>().UpdateTogglesRPC();                        
+                    }               
                 }
             }
         }
     }
+  
 
     [PunRPC]
     void ChangeColour(string team)

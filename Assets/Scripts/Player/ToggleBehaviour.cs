@@ -261,8 +261,8 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 else
                 {
                    // _sprite.color = _disconnectedColor;
-                    gameObject.transform.parent = _originalParent;                 
-                 }
+                    gameObject.transform.parent = _originalParent;                   
+                }
             }                          
         }
         else if (transform.parent == null)
@@ -508,7 +508,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    void UpdateTogglesRPC()
+    public void UpdateTogglesRPC()
     {
         StartCoroutine(UpdateToggles());
     }
