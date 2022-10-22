@@ -48,10 +48,9 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     }
 
     void Update()
-    {
-      //  Debug.Log(isCheckToggles);
+    {    
           if (isCheckToggles == true)
-        {
+        {          
             // Yellow ------------------------
             // Check if bounds of this toggle are overlapping a yellow start point.
             for (int i = 0; i < yellowTeamStartPoints.Length; i++)
@@ -520,5 +519,12 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         {
             GameManager.MovesInRoundRemaining--;
         }
+    }
+
+
+    public void UpdateStartPointsAfterClickingStartPoint()
+    {
+       // Debug.Log("UpdateStartPointsAfterClickingStartPoint");
+        photonView.RPC("UpdateStartPoints", RpcTarget.All);
     }
 }

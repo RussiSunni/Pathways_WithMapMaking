@@ -17,6 +17,9 @@ public class StartPointBehaviour : MonoBehaviourPun
     private bool isOwnedByTeam = false;
     public GameObject[] toggles;
 
+    [SerializeField]
+    CircleCollider2D thisCollider;
+
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
@@ -70,14 +73,48 @@ public class StartPointBehaviour : MonoBehaviourPun
                         // Reduce turns in round remaining for all team members.                       
                         photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
 
-                        // Update the toggles.
-                        toggles[0].GetComponent<ToggleBehaviour>().UpdateTogglesRPC();                        
+                        photonView.RPC("UpdateTogglesAfterClickingStartPointRPC", RpcTarget.All);
                     }               
                 }
             }
         }
     }
-  
+
+    // Update toggles after clicking start point.
+    [PunRPC]
+     void UpdateTogglesAfterClickingStartPointRPC()
+    {
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            if (thisCollider.bounds.Intersects(toggles[i].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds))
+            {              
+                StartCoroutine(UpdateToggles());
+            }
+        }
+    }
+
+    private IEnumerator UpdateToggles()
+    {
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            toggles[i].GetComponent<ToggleBehaviour>().UpdateStartPointsAfterClickingStartPoint();
+            toggles[i].GetComponent<ToggleBehaviour>().isCheckToggles = true;
+        }
+
+        int h = 0;
+        while (h < 20)
+        {
+            //  Debug.Log(h);
+            h++;
+            yield return null;
+        }
+
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            toggles[i].GetComponent<ToggleBehaviour>().isCheckToggles = false;
+        }        
+    }
+
 
     [PunRPC]
     void ChangeColour(string team)
