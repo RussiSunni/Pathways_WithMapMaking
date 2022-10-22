@@ -248,13 +248,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 
                         // If so, exit the Update method.
                         return;
-                    }
-                    // if not...
-                    //else
-                    //{
-                    //    _sprite.color = _disconnectedColor;
-                    //    gameObject.transform.parent = _originalParent;                       
-                    //}
+                    }                   
                 }
                 // If they are not...
                 else
@@ -274,7 +268,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
     {
         // Now check the endpoints.
         for (int i = 0; i < endPoints.Length; i++)
-        {
+        {          
            // Debug.Log("endpoint length: " + i);
             if (thisCollider.bounds.Intersects(endPoints[i].GetComponent<BoxCollider2D>().bounds))
             {              
@@ -313,7 +307,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                     endPoints[i].GetComponent<SpriteRenderer>().color = _disconnectedColor;
                     endPoints[i].transform.parent = null;
                 }
-            }           
+            }          
         }
     }
 
@@ -430,7 +424,9 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                         photonView.RPC("ReduceTurnsRemaining", RpcTarget.All, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name);
                     }
 
-                    photonView.RPC("UpdateStartPoints", RpcTarget.All);                        
+                    photonView.RPC("UpdateStartPoints", RpcTarget.All);
+
+                    
                 }
               //  }
             }
@@ -459,6 +455,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         }
 
         gameManagerScript.UpdateScore();
+        gameManagerScript.CheckIfEndPointTouchingAnyToggle();
     }
 
     // For other clients.

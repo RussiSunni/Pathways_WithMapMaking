@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviourPun
     private GameObject[] greenTeamStartpoints;
     int numberOfToggles = 0;
     int numberOfEndPoints = 0;
+    private Color _disconnectedColor = new Color(1, 1, 1, 1);
+
+    public GameObject[] toggles;
+    public GameObject[] endPoints;
 
 
     private void Awake()
@@ -59,11 +63,16 @@ public class GameManager : MonoBehaviourPun
     {
         _infoPanelCanvasGroup.alpha = 1;
         _isGameStarted = true;
-        ScoreText.text = _score.ToString();     
+        ScoreText.text = _score.ToString();
+
+
+        endPoints = GameObject.FindGameObjectsWithTag("EndPoint");
+        Debug.Log(endPoints.Length);
+        toggles = GameObject.FindGameObjectsWithTag("Toggle");
     }
 
     void Start()
-    {      
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         MovesInRoundRemaining = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["MovesPerRound"];
@@ -151,7 +160,7 @@ public class GameManager : MonoBehaviourPun
     [PunRPC]
     void UpdateScoreRPC()
     {
-        Debug.Log("update score");
+      //  Debug.Log("update score");
 
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
         {
@@ -374,5 +383,70 @@ public class GameManager : MonoBehaviourPun
 
         IsGameEnded = true;
         _gameCompletePanelCanvasGroup.alpha = 1;
+    }
+
+    public void CheckIfEndPointTouchingAnyToggle()
+    {
+        photonView.RPC("CheckIfEndPointTouchingAnyToggleRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void CheckIfEndPointTouchingAnyToggleRPC()
+    {
+        endPoints = GameObject.FindGameObjectsWithTag("EndPoint"); 
+        toggles = GameObject.FindGameObjectsWithTag("Toggle");
+
+        Debug.Log(endPoints.Length);
+        //   bool isConnected;
+        for (int i = 0; i < endPoints.Length; i++)
+        {
+            var endPoint = endPoints[i].GetComponent<BoxCollider2D>();
+
+            bool isConnected = false;
+
+            for (int j = 0; j < toggles.Length; j++)
+            {
+                Bounds toggle = toggles[j].transform.GetChild(0).GetComponent<BoxCollider2D>().bounds;
+
+                if (endPoint.bounds.Intersects(toggle))
+                {
+                    if (toggles[j].transform.root.tag == "Yellow Team StartPoint")
+                    {                       
+                        isConnected = true;
+                        break;
+                    }
+                    else if (toggles[j].transform.root.tag == "Blue Team StartPoint")
+                    {                        
+                        isConnected = true;
+                        break;
+                    }
+                    else if (toggles[j].transform.root.tag == "Red Team StartPoint")
+                    {
+                        isConnected = true;
+                        break;
+                    }
+                    else if (toggles[j].transform.root.tag == "Purple Team StartPoint")
+                    {
+                        isConnected = true;
+                        break;
+                    }
+                    else if (toggles[j].transform.root.tag == "Orange Team StartPoint")
+                    {
+                        isConnected = true;
+                        break;
+                    }
+                    else if (toggles[j].transform.root.tag == "Green Team StartPoint")
+                    {
+                        isConnected = true;
+                        break;
+                    }
+                }               
+            }
+            if (isConnected == false)
+            {
+                endPoint.transform.parent = null;
+                endPoint.transform.GetComponent<SpriteRenderer>().color = _disconnectedColor;               
+            }           
+        }       
     }
 }
