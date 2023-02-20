@@ -142,14 +142,13 @@ public class GameManager : MonoBehaviourPun
                 {
                     photonView.RPC("DecreaseTimeRemaining", RpcTarget.All, SecondsInRoundRemaining);
                 }
-
+                // End game if no time remaining.
                 if (SecondsInRoundRemaining < 0)
                 {
                     if (_roundNumber == TotalNumberOfRounds)
                     {
                         Debug.Log("End of game");
-                        photonView.RPC("EndGame", RpcTarget.All, 
-                            _yellowTeamScore, _blueTeamScore, _redTeamScore, _purpleTeamScore, _orangeTeamScore, _greenTeamScore);
+                        photonView.RPC("MasterClientEndGame", RpcTarget.MasterClient);                        
                     }
                     else
                     {
@@ -348,7 +347,7 @@ public class GameManager : MonoBehaviourPun
                 if (_roundNumber == TotalNumberOfRounds)
                 {
                     Debug.Log("End of game");
-                    photonView.RPC("EndGame", RpcTarget.All);
+                    photonView.RPC("MasterClientEndGame", RpcTarget.MasterClient);
                 }
                 else
                 {
@@ -385,6 +384,24 @@ public class GameManager : MonoBehaviourPun
             SecondsInRoundRemaining = (float)GameAndMapSettings.roomOptions.CustomRoomProperties["SecondsPerRound"];
         }
     }
+
+    [PunRPC]
+    void MasterClientEndGame()
+    {
+        // need to RPC all clients to get latest scores,
+      //  photonView.RPC("GetAllEndGameScores", RpcTarget.All);
+
+        // then fire the below.
+        photonView.RPC("EndGame", RpcTarget.All,
+                            _yellowTeamScore, _blueTeamScore, _redTeamScore, _purpleTeamScore, _orangeTeamScore, _greenTeamScore);
+    }
+
+    //[PunRPC]
+    //void MasterClientReceiveEndGameScores()
+    //{
+
+    //}
+
 
     [PunRPC]
     void EndGame(int yellowTeamScore, int blueTeamScore, int redTeamScore, int purpleTeamScore, int orangeTeamScore, int greenTeamScore)
