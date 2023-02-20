@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviourPun
     public Text _movesRemainingText;
     public Text _timeRemainingText;
     public Text NumberOfStealsRemainingText;
+    public Text GameCompleteText;
 
     [SerializeField]
     private CanvasGroup _infoPanelCanvasGroup;
@@ -23,6 +25,14 @@ public class GameManager : MonoBehaviourPun
     private CanvasGroup _gameCompletePanelCanvasGroup;
 
     private int _score = 0;
+
+    private int _yellowTeamScore = 0;
+    private int _blueTeamScore = 0;
+    private int _redTeamScore = 0;
+    private int _purpleTeamScore = 0;
+    private int _orangeTeamScore = 0;
+    private int _greenTeamScore = 0;
+
     private int _roundNumber = 1;
     public static int TotalNumberOfRounds;
     public static int MovesInRoundRemaining;
@@ -138,7 +148,8 @@ public class GameManager : MonoBehaviourPun
                     if (_roundNumber == TotalNumberOfRounds)
                     {
                         Debug.Log("End of game");
-                        photonView.RPC("EndGame", RpcTarget.All);
+                        photonView.RPC("EndGame", RpcTarget.All, 
+                            _yellowTeamScore, _blueTeamScore, _redTeamScore, _purpleTeamScore, _orangeTeamScore, _greenTeamScore);
                     }
                     else
                     {
@@ -324,6 +335,9 @@ public class GameManager : MonoBehaviourPun
             // Calculate the score.
             _score = (numberOfToggles * PointsPerToggle) + (numberOfEndPoints * PointsPerEndpoint);
 
+            // Update the score for each team.
+            photonView.RPC("UpdateTeamScores", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.GetPhotonTeam().Name, _score);
+
             // Update the UI.
             NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
             ScoreText.text = _score.ToString();
@@ -373,16 +387,44 @@ public class GameManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    void EndGame()
-    {
-      //  _totalScore = _totalScore + RoundScore;
+    void EndGame(int yellowTeamScore, int blueTeamScore, int redTeamScore, int purpleTeamScore, int orangeTeamScore, int greenTeamScore)
+    {   
         ScoreText.text = _score.ToString();
-
-        //   RoundScore = 0;
-        //   RoundScoreText.text = RoundScore.ToString();
 
         IsGameEnded = true;
         _gameCompletePanelCanvasGroup.alpha = 1;
+
+        // Create the end of game text.     
+        string gameCompletedString = "Game Finished! \n";
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetPhotonTeam().Name == "Yellow")
+            {
+                gameCompletedString = gameCompletedString + "Yellow Team: " + yellowTeamScore + "\n";
+            }
+            else if (player.GetPhotonTeam().Name == "Blue")
+            {
+                gameCompletedString = gameCompletedString + "Blue Team: " + blueTeamScore + "\n";
+            }
+            else if (player.GetPhotonTeam().Name == "Red")
+            {
+                gameCompletedString = gameCompletedString + "Red Team: " + redTeamScore + "\n";
+            }
+            else if (player.GetPhotonTeam().Name == "Purple")
+            {
+                gameCompletedString = gameCompletedString + "Purple Team: " + purpleTeamScore + "\n";
+            }
+            else if (player.GetPhotonTeam().Name == "Orange")
+            {
+                gameCompletedString = gameCompletedString + "Orange Team: " + orangeTeamScore + "\n";
+            }
+            else if (player.GetPhotonTeam().Name == "Green")
+            {
+                gameCompletedString = gameCompletedString + "Green Team: " + greenTeamScore + "\n";
+            }           
+        }
+
+        GameCompleteText.text = gameCompletedString;
     }
 
     public void CheckIfEndPointTouchingAnyToggle()
@@ -396,7 +438,6 @@ public class GameManager : MonoBehaviourPun
         endPoints = GameObject.FindGameObjectsWithTag("EndPoint"); 
         toggles = GameObject.FindGameObjectsWithTag("Toggle");
 
-        Debug.Log(endPoints.Length);
         //   bool isConnected;
         for (int i = 0; i < endPoints.Length; i++)
         {
@@ -447,6 +488,41 @@ public class GameManager : MonoBehaviourPun
                 endPoint.transform.parent = null;
                 endPoint.transform.GetComponent<SpriteRenderer>().color = _disconnectedColor;               
             }           
+        }       
+    }
+
+    // Only on the master client.
+    [PunRPC]
+    void UpdateTeamScores(string teamName, int score)
+    {
+        Debug.Log(teamName);
+        Debug.Log(score);
+
+        if (teamName == "Yellow")
+        {
+            _yellowTeamScore = score;
+
+           // Debug.Log(yellowTeamScore);
+        }
+        else if (teamName == "Blue")
+        {
+            _blueTeamScore = score;
+        }
+        else if (teamName == "Red")
+        {
+            _redTeamScore = score;
+        }
+        else if (teamName == "Purple")
+        {
+            _purpleTeamScore = score;
+        }
+        else if (teamName == "Orange")
+        {
+            _orangeTeamScore = score;
+        }
+        else if (teamName == "Green")
+        {
+            _greenTeamScore = score;
         }       
     }
 }
