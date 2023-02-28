@@ -346,8 +346,11 @@ MonoBehaviour:
   _movesRemainingText: {fileID: 1600433481}
   _timeRemainingText: {fileID: 639268885}
   NumberOfStealsRemainingText: {fileID: 1260906718}
+  GameCompleteText: {fileID: 226374491}
   _infoPanelCanvasGroup: {fileID: 1915672279}
   _gameCompletePanelCanvasGroup: {fileID: 1513560898}
+  toggles: []
+  endPoints: []
 --- !u!4 &68121154
 Transform:
   m_ObjectHideFlags: 0
@@ -490,10 +493,10 @@ RectTransform:
   m_Father: {fileID: 1513560897}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 60}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000030517578, y: -5}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226374491
 MonoBehaviour:
@@ -508,7 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -517,18 +520,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Game finished.
+  m_Text: 'Game finished. '
 --- !u!222 &226374492
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1446,7 +1449,7 @@ MonoBehaviour:
   startGameCanvasGroup: {fileID: 1984146495}
   playerListHeadingTextCanvasGroup: {fileID: 1128504613}
   playerListText: {fileID: 2076018680}
-  roomNotReadyYetTextCanvasGroup: {fileID: 0}
+  roomNotReadyYetTextCanvasGroup: {fileID: 178101455}
   roomNameText: {fileID: 2065868099}
   _timeRemainingText: {fileID: 1915661838}
 --- !u!4 &1252021072
@@ -1744,7 +1747,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2111,18 +2114,18 @@ RectTransform:
   m_GameObject: {fileID: 1513560896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2955465, y: 1.2955465, z: 1.2955465}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 226374490}
   m_Father: {fileID: 1337663389}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -219, y: -136.83801}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 200, y: 300}
+  m_Pivot: {x: 0, y: 1}
 --- !u!225 &1513560898
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2148,7 +2151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.53333336}
+  m_Color: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2987,7 +2990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2065868098
 RectTransform:
   m_ObjectHideFlags: 0

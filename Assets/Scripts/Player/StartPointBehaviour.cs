@@ -158,7 +158,7 @@ public class StartPointBehaviour : MonoBehaviourPun
     {    
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == team)
             {
-                GameManager.MovesInRoundRemaining--;
+                GameManager.MovesInRoundRemaining--; 
             }        
     }
 

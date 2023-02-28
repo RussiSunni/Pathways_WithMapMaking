@@ -40,14 +40,14 @@ public class GameAndMapSettings : MonoBehaviour
         else
         {
             roomName = "RoomC1G1RoomTHASD";
-            gameId = "82";
+            gameId = "96";
             urlBeginning = "localhost:3000";
-            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            if (Application.platform == RuntimePlatform.WindowsEditor) 
             {         
                 playerName = "Teacher";
                 team = "Teacher";
             }
-            else if (Application.platform == RuntimePlatform.WindowsEditor)
+            else if (Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 playerName = "testPlayer";
                 team = "Yellow";
@@ -90,11 +90,13 @@ public class GameAndMapSettings : MonoBehaviour
 
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
         // get id from the URL
+        Debug.Log(urlBeginning + "/games/" + gameId);
+
         StartCoroutine(GetGameSettingsRequest(urlBeginning + "/games/" + gameId));
     }
 
     IEnumerator GetGameSettingsRequest(string uri)
-    {
+    {      
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
             // Request and wait for the desired page.

@@ -8,7 +8,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
 {
     private SpriteRenderer _sprite;
     private Color _yellowTeamConnectedColor = new Color(1, 1, 0, 1);
-    private Color _blueTeamConnectedColor = new Color(0, 0, 1, 1);
+    private Color _blueTeamConnectedColor = new Color(0, 0, 1, 1); 
     private Color _redTeamConnectedColor = new Color(1, 0, 0, 1);
     private Color _purpleTeamConnectedColor = new Color(1, 0, 1, 1);
     private Color _orangeTeamConnectedColor = new Color(1, 0.65f, 0, 1);
@@ -43,8 +43,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         toggles = GameObject.FindGameObjectsWithTag("Toggle");
 
         GameObject gameManager = GameObject.Find("GameManager");
-        gameManagerScript = gameManager.GetComponent<GameManager>();
-        
+        gameManagerScript = gameManager.GetComponent<GameManager>();        
     }
 
     void Update()
@@ -306,7 +305,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
                 {
                     endPoints[i].GetComponent<SpriteRenderer>().color = _disconnectedColor;
                     endPoints[i].transform.parent = null;
-                }
+                }                              
             }          
         }
     }
@@ -442,7 +441,7 @@ public class ToggleBehaviour : MonoBehaviourPun, IPunObservable
         }
 
         int h = 0;
-        while (h < 20)
+        while (h < 30)
         {
           //  Debug.Log(h);
             h++;

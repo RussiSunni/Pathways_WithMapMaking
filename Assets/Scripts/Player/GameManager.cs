@@ -10,8 +10,7 @@ using Photon.Realtime;
 public class GameManager : MonoBehaviourPun
 {
     public Text TeamNameText;
-    public Text PlayerNameText;
-   // public Text RoundScoreText;
+    public Text PlayerNameText;   
     public Text ScoreText;
     public Text _roundNumberText;
     public Text _movesRemainingText;
@@ -75,7 +74,6 @@ public class GameManager : MonoBehaviourPun
         _isGameStarted = true;
         ScoreText.text = _score.ToString();
 
-
         endPoints = GameObject.FindGameObjectsWithTag("EndPoint");
         Debug.Log(endPoints.Length);
         toggles = GameObject.FindGameObjectsWithTag("Toggle");
@@ -137,12 +135,13 @@ public class GameManager : MonoBehaviourPun
             // Time remaining
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
+                // Round timer, running only on master client.
                 SecondsInRoundRemaining -= Time.deltaTime;
                 if (SecondsInRoundRemaining > 0)
                 {
                     photonView.RPC("DecreaseTimeRemaining", RpcTarget.All, SecondsInRoundRemaining);
                 }
-                // End game if no time remaining.
+                // End round or game if no time remaining.
                 if (SecondsInRoundRemaining < 0)
                 {
                     if (_roundNumber == TotalNumberOfRounds)
@@ -152,7 +151,7 @@ public class GameManager : MonoBehaviourPun
                     }
                     else
                     {
-                        photonView.RPC("NextRound", RpcTarget.All);
+                        photonView.RPC("NextRoundRPC", RpcTarget.All);
                     }
                 }
             }
@@ -170,8 +169,6 @@ public class GameManager : MonoBehaviourPun
     [PunRPC]
     void UpdateScoreRPC()
     {
-      //  Debug.Log("update score");
-
         if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name != "Teacher")
         {
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Name == "Yellow")
@@ -340,6 +337,9 @@ public class GameManager : MonoBehaviourPun
             // Update the UI.
             NumberOfStealsRemainingText.text = NumberOfStealsRemaining.ToString();
             ScoreText.text = _score.ToString();
+
+            // End game or round if turns finished for that team.
+            // 'MovesInRoundRemaining' is updated on the ToggleBehaviour script.
             _movesRemainingText.text = MovesInRoundRemaining.ToString();
 
             if (MovesInRoundRemaining == 0)
@@ -351,7 +351,7 @@ public class GameManager : MonoBehaviourPun
                 }
                 else
                 {
-                    photonView.RPC("NextRound", RpcTarget.All);
+                    photonView.RPC("NextRoundRPC", RpcTarget.All);
                 }
             }
         }
@@ -366,22 +366,26 @@ public class GameManager : MonoBehaviourPun
         _timeRemainingText.text = roundedSecondsInRoundRemaining.ToString();       
     }
 
+    public void NextRound()
+    {
+        Debug.Log("Endpoint reached");
+        // End round once someone reaches an endpoint.               
+        photonView.RPC("NextRoundRPC", RpcTarget.All);
+    }
+
     [PunRPC]
-    void NextRound()
+    void NextRoundRPC()
     {
         if (_roundNumber < TotalNumberOfRounds)
         {
             _roundNumber++;
             _roundNumberText.text = _roundNumber.ToString();
-
-          //  _totalScore = _totalScore + RoundScore;
-          //  TotalScoreText.text = _totalScore.ToString();
-
-            // Reset the parameters for the next round.
-          //  RoundScore = 0;
-         //   RoundScoreText.text = RoundScore.ToString();
+        
             MovesInRoundRemaining = (int)GameAndMapSettings.roomOptions.CustomRoomProperties["MovesPerRound"];
             SecondsInRoundRemaining = (float)GameAndMapSettings.roomOptions.CustomRoomProperties["SecondsPerRound"];
+
+            Debug.Log(MovesInRoundRemaining);
+            Debug.Log(SecondsInRoundRemaining);
         }
     }
 
@@ -412,7 +416,7 @@ public class GameManager : MonoBehaviourPun
         _gameCompletePanelCanvasGroup.alpha = 1;
 
         // Create the end of game text.     
-        string gameCompletedString = "Game Finished! \n";
+        string gameCompletedString = "Game Finished! \n\n";
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             if (player.GetPhotonTeam().Name == "Yellow")
@@ -498,7 +502,7 @@ public class GameManager : MonoBehaviourPun
                         isConnected = true;
                         break;
                     }
-                }               
+                }             
             }
             if (isConnected == false)
             {
@@ -512,8 +516,8 @@ public class GameManager : MonoBehaviourPun
     [PunRPC]
     void UpdateTeamScores(string teamName, int score)
     {
-        Debug.Log(teamName);
-        Debug.Log(score);
+    //    Debug.Log(teamName);
+     //   Debug.Log(score);
 
         if (teamName == "Yellow")
         {

@@ -69,6 +69,13 @@ MonoBehaviour:
   - JoinRoomRPC
   - CheckIfGameStartedRPC
   - StartTimerRPC
+  - UpdateEndPointsRPC
+  - UpdateTogglesAfterClickingStartPointRPC
+  - CheckIfEndPointTouchingAnyToggleRPC
+  - UpdateTeamScores
+  - MasterClientEndGame
+  - MovesInRoundFinished
+  - NextRoundRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
